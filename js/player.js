@@ -29,7 +29,7 @@ class Player {
     draw() {
 
        // this.ctx.drawImage(this.posX, this.posY, this.width, this.height)
-       this.ctx.fillStyle = "teal"
+       this.ctx.fillStyle = "black"
         this.ctx.fillRect(this.posX, this.posY, this.width, this.height)
 
     }

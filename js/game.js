@@ -9,8 +9,8 @@ const Game = {
 
     background: undefined,
     player: undefined,
-    // ballsPositive = [],
-    // ballsNegative = [],
+    // positiveBalls = [],
+    // negativeBalls = [],
 
     keys: {
         moveLeft: 'ArrowLeft',
@@ -18,8 +18,8 @@ const Game = {
         shoot: 'Space'
     },
 
-    init () {
-        console.log('hola');
+    init() {
+        // console.log('hola');
         this.canvas = document.getElementById('canvas')
         this.ctx = this.canvas.getContext('2d')
         this.setDimensions()
@@ -35,6 +35,11 @@ const Game = {
         this.canvas.height = this.height
 
         this.columnWidth = this.width/5
+        this.column1Center = this.columnWidth/2
+        this.column2Center = this.column1Center+(this.columnWidth*1)
+        this.column3Center = this.column1Center+(this.columnWidth*2)
+        this.column4Center = this.column1Center+(this.columnWidth*3)
+        this.column5Center = this.column1Center+(this.columnWidth*4)
         
     },
 
@@ -47,6 +52,8 @@ const Game = {
         this.clear()
         this.drawAll()
 
+        this.generatePositiveBalls()
+        this.clearPositiveBalls()
 
         }, 100);
     },
@@ -55,7 +62,6 @@ const Game = {
     reset() {
     
         this.background = new Background(this.ctx, this.width, this.height)
-        this.player = new Player(this.ctx, this.width, this.height, this.keys, this.columnWidth)
         //bolitas
 
         this.column1 = new Column(this.ctx, 0, this.width, this.height)
@@ -63,6 +69,10 @@ const Game = {
         this.column3 = new Column(this.ctx, 2*this.columnWidth, this.width, this.height)
         this.column4 = new Column(this.ctx, 3*this.columnWidth, this.width, this.height)
         this.column5 = new Column(this.ctx, 4*this.columnWidth, this.width, this.height)
+        this.player = new Player(this.ctx, this.width, this.height, this.keys, this.columnWidth)
+
+        this.positiveBalls = []
+        // this.negativeBalls = []
         
     },
 
@@ -75,6 +85,9 @@ const Game = {
     this.column4.draw()
     this.column5.draw()
     this.player.draw()
+    // this.positiveBalls.forEach(positive => positive.draw());
+    // this.negativeBalls.forEach(negative => negative.draw());
+
     //dibujar bolitas this.bolitas?
 
     },
@@ -83,5 +96,14 @@ const Game = {
 
         this.ctx.clearRect(0, 0, this.width, this.height)
 
+    },
+
+    clearPositiveBalls(){
+        this.positiveBalls = this.positiveBalls.filter(positive => positive.posY >= this.height)
+    },
+
+    generatePositiveBalls() {
+        console.log("hola")
+        this.positiveBalls.push(new PositiveBall(this.ctx, this.column3Center))
     }
 }
