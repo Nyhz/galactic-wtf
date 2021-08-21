@@ -13,7 +13,7 @@ class Background {
     draw() {
 
         //this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
-        this.ctx.fillStyle = "red"
+        this.ctx.fillStyle = "grey"
         this.ctx.fillRect(0,0,this.width, this.height)
 
 
