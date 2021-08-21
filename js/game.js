@@ -22,7 +22,8 @@ const Game = {
         this.canvas = document.getElementById('canvas')
         this.ctx = this.canvas.getContext('2d')
         this.setDimensions()
-        console.log(this.width)
+        this.background = new Background(this.ctx, this.width, this.height)
+        this.background.draw()
         this.player = new Player(this.ctx, this.width, this.height, this.keys)
         this.player.draw()
         //this.start()
@@ -30,7 +31,6 @@ const Game = {
 
     setDimensions() {
         this.width = window.innerWidth
-        console.log(this.width)
         this.height = window.innerHeight
         this.canvas.width = this.width
         this.canvas.height = this.height
