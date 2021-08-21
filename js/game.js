@@ -11,9 +11,9 @@ const Game = {
   negativeBalls: [],
 
   keys: {
-    moveLeft: "ArrowLeft",
-    moveRight: "ArrowRight",
-    shoot: "Space",
+    moveLeft: "a",
+    moveRight: "d",
+    shoot: "w",
   },
 
   init() {
@@ -53,7 +53,6 @@ const Game = {
       this.clearNegativeBalls();
 
       this.counter++;
-      console.log(this.counter);
     }, 50);
   },
 
@@ -134,7 +133,6 @@ const Game = {
 
   pickRandomColumn() {
     let randomNum = Math.floor(Math.random() * 5);
-    console.log(randomNum);
 
     switch (randomNum) {
       case 0:
