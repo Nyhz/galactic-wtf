@@ -1,10 +1,10 @@
 class NegativeBall {
-  constructor(ctx, column) {
+  constructor(ctx, column, velY) {
     this.ctx = ctx;
     // this.size = 35
     this.posY = 0;
     this.posX = column - 20;
-    this.velY = 15;
+    this.velY = velY;
     this.damage = 1;
   }
 

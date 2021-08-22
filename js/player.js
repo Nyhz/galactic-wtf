@@ -29,6 +29,9 @@ class Player {
     // this.ctx.drawImage(this.posX, this.posY, this.width, this.height)
     this.ctx.fillStyle = "black";
     this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
+
+    this.bullets.forEach((bullet) => bullet.draw());
+    this.clearBullets();
   }
 
   setListeners() {
@@ -63,12 +66,18 @@ class Player {
   }
 
   shoot() {
-    this.bullets.push(
-      new Bullet(this.ctx, this.posX, this.height, this.gameHeight)
-    );
+    if (this.bullets.length < 1) {
+      this.bullets.push(
+        new Bullet(this.ctx, this.posX, this.height, this.gameHeight)
+      );
+    }
+
+    console.log(this.bullets);
   }
 
   clearBullets() {
-    this.bullets = this.bullets.filter((bull) => bull.posY >= 0);
+    this.bullets = this.bullets.filter(
+      (bull) => bull.posY > 0 && bull.posY <= this.gameHeight
+    );
   }
 }

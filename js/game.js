@@ -4,6 +4,11 @@ const Game = {
   width: undefined,
   height: undefined,
   counter: 0,
+  score: 0,
+  currentLevel: 1,
+  speedMultiplier: 0,
+  negBaseBallSpeed: 5,
+  posBaseBallSpeed: 5,
 
   background: undefined,
   player: undefined,
@@ -52,8 +57,14 @@ const Game = {
       this.generateNegativeBalls();
       this.clearNegativeBalls();
 
+      this.addScore();
+      this.drawScore();
+
+      this.defineLevels();
+      this.printCurrentLevel();
+
       this.counter++;
-    }, 50);
+    }, 25);
   },
 
   reset() {
@@ -160,18 +171,74 @@ const Game = {
   // Para aumentar el ritmo de generacion añadir una condicion para pasar de nivel
   // cuantos mas puntos tenga el counter.
   generatePositiveBalls() {
-    if (this.counter % 60 === 0) {
+    if (this.counter % 80 === 0) {
       this.positiveBalls.push(
-        new PositiveBall(this.ctx, this.pickRandomColumn())
+        new PositiveBall(
+          this.ctx,
+          this.pickRandomColumn(),
+          this.posBaseBallSpeed + this.speedMultiplier
+        )
       );
     }
   },
 
   generateNegativeBalls() {
-    if (this.counter % 40 === 0) {
+    if (this.counter % 50 === 0) {
       this.negativeBalls.push(
-        new NegativeBall(this.ctx, this.pickRandomColumn())
+        new NegativeBall(
+          this.ctx,
+          this.pickRandomColumn(),
+          this.negBaseBallSpeed + this.speedMultiplier
+        )
       );
+    }
+  },
+
+  drawScore() {
+    this.ctx.font = "48px serif";
+    this.ctx.fillStyle = "blue";
+    this.ctx.strokeText(`Score: ${this.score}`, 75, 100);
+  },
+
+  addScore() {
+    this.score = Math.floor(this.counter / 5);
+  },
+
+  // INTENTAR HACER UN SWITCH CASE?????????
+  defineLevels() {
+    if (this.score > 100 && this.score < 250) {
+      this.speedMultiplier = 5;
+      this.currentLevel = 2;
+    } else if (this.score > 250 && this.score < 400) {
+      this.speedMultiplier = 7;
+      this.currentLevel = 3;
+    } else if (this.score > 400 && this.score < 750) {
+      this.speedMultiplier = 10;
+      this.currentLevel = 4;
+    }
+  },
+
+  // COLOCAR EL SCORE DE MEJOR MANERA
+  printLevel(currentLvl) {
+    this.ctx.font = "48px serif";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText(
+      `Current Level: ${currentLvl}`,
+      this.width / 2 - 145,
+      120
+    );
+  },
+
+  //INTENTAR HACER UN SWITCH CASE??????
+  printCurrentLevel() {
+    if (this.score < 100) {
+      this.printLevel(this.currentLevel);
+    } else if (this.score > 100) {
+      this.printLevel(this.currentLevel);
+    } else if (this.score > 250) {
+      this.printLevel(this.currentLevel);
+    } else if (this.score > 400) {
+      this.printLevel(this.currentLevel);
     }
   },
 };
