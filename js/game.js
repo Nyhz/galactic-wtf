@@ -5,13 +5,18 @@ const Game = {
   height: undefined,
   counter: 0,
   score: 0,
+  ballScore: 0,
+  timeScore: 0,
   currentLevel: 1,
   speedMultiplier: 0,
-  negBaseBallSpeed: 5,
-  posBaseBallSpeed: 5,
+  negBaseBallSpeed: 8,
+  posBaseBallSpeed: 8,
 
   background: undefined,
   player: undefined,
+  positiveBall: undefined,
+  negativeBall: undefined,
+  bullet: undefined,
   positiveBalls: [],
   negativeBalls: [],
 
@@ -62,6 +67,8 @@ const Game = {
 
       this.defineLevels();
       this.printCurrentLevel();
+
+      this.positiveCollition();
 
       this.counter++;
     }, 25);
@@ -135,6 +142,10 @@ const Game = {
     this.positiveBalls = this.positiveBalls.filter(
       (positive) => positive.posY <= this.height
     );
+
+    this.positiveBalls = this.positiveBalls.filter(
+      (removePos) => removePos.collided === false
+    );
   },
 
   clearNegativeBalls() {
@@ -172,13 +183,13 @@ const Game = {
   // Para aumentar el ritmo de generacion añadir una condicion para pasar de nivel
   // cuantos mas puntos tenga el counter.
   generatePositiveBalls() {
-    if (this.counter % 80 === 0) {
+    if (this.counter % 120 === 0) {
       this.positiveBalls.push(
-        new PositiveBall(
+        (this.positiveBall = new PositiveBall(
           this.ctx,
           this.pickRandomColumn(),
           this.posBaseBallSpeed + this.speedMultiplier
-        )
+        ))
       );
     }
   },
@@ -186,23 +197,25 @@ const Game = {
   generateNegativeBalls() {
     if (this.counter % 50 === 0) {
       this.negativeBalls.push(
-        new NegativeBall(
+        (this.negativeBall = new NegativeBall(
           this.ctx,
           this.pickRandomColumn(),
           this.negBaseBallSpeed + this.speedMultiplier
-        )
+        ))
       );
     }
   },
 
   drawScore() {
+    this.score = this.timeScore + this.ballScore;
+
     this.ctx.font = "48px serif";
     this.ctx.fillStyle = "blue";
     this.ctx.strokeText(`Score: ${this.score}`, 75, 100);
   },
 
   addScore() {
-    this.score = Math.floor(this.counter / 5);
+    this.timeScore = Math.floor(this.counter / 5);
   },
 
   // INTENTAR HACER UN SWITCH CASE?????????
@@ -242,4 +255,23 @@ const Game = {
       this.printLevel(this.currentLevel);
     }
   },
+
+  isColission() {},
+
+  positiveCollition() {
+    if (
+      this.player.posX < this.positiveBall.posX + this.positiveBall.width &&
+      this.player.posX + this.player.width > this.positiveBall.posX &&
+      this.player.posY < this.positiveBall.posY + this.positiveBall.height &&
+      this.player.height + this.player.posY > this.positiveBall.posY
+    ) {
+      this.positiveBall.collided = true;
+      this.ballScore += 20;
+
+      // this.score += 20;
+      // Sumar score, eliminar bola positiva.
+    }
+  },
+
+  negativeCollition() {},
 };

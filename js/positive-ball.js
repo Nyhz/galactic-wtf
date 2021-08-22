@@ -6,11 +6,14 @@ class PositiveBall {
     this.posX = column - 20;
     this.velY = velY;
     this.points = 100;
+    this.width = 40;
+    this.height = 40;
+    this.collided = false;
   }
 
   draw() {
     this.ctx.fillStyle = "blue";
-    this.ctx.fillRect(this.posX, this.posY, 40, 40);
+    this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
     this.move();
   }
 
