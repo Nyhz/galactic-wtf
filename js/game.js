@@ -111,6 +111,7 @@ const Game = {
   },
 
   drawAll() {
+    //ARREGLAR
     this.background.draw();
     this.column1.draw();
     this.column2.draw();
