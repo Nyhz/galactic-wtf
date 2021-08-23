@@ -67,6 +67,7 @@ const Game = {
 
       this.clearPositiveBalls();
       this.clearNegativeBalls();
+      this.player.clearBullets();
 
       this.isColission();
 
@@ -225,19 +226,19 @@ const Game = {
   },
 
   addScore() {
-    this.timeScore = Math.floor(this.counter / 5);
+    this.timeScore = Math.floor(this.counter / 10);
   },
 
   // INTENTAR HACER UN SWITCH CASE?????????
   defineLevels() {
-    if (this.score > 100 && this.score < 250) {
+    if (this.score > 250 && this.score < 500) {
       this.speedMultiplier = 3;
       this.currentLevel = 2;
-    } else if (this.score > 250 && this.score < 400) {
-      this.speedMultiplier = 5;
+    } else if (this.score > 500 && this.score < 1000) {
+      this.speedMultiplier = 4;
       this.currentLevel = 3;
-    } else if (this.score > 400 && this.score < 750) {
-      this.speedMultiplier = 7;
+    } else if (this.score > 1000 && this.score < 2500) {
+      this.speedMultiplier = 5;
       this.currentLevel = 4;
     }
   },
@@ -306,7 +307,6 @@ const Game = {
     const bullet = this.player.bullet;
     this.player.bullet &&
       this.negativeBalls.some((ball) => {
-        // console.log(bullet.posX, bullet.width, ball.posX);
         if (
           ball.posX < bullet.posX + bullet.width &&
           ball.posX + ball.width > bullet.posX &&
@@ -315,7 +315,7 @@ const Game = {
         ) {
           ball.collided = true;
           bullet.collidedNegative = true;
-          this.ballScore += 20;
+          this.ballScore += 10;
         }
       });
 

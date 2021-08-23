@@ -34,7 +34,7 @@ class Player {
     this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
 
     this.bullets.forEach((bullet) => bullet.draw());
-    this.clearBullets();
+    // this.clearBullets();
   }
 
   setListeners() {

@@ -5,7 +5,7 @@ class Bullet {
     this.posY = gameH - playerH - 100;
     this.width = 40;
     this.height = 40;
-    this.speedY = 40;
+    this.speedY = 75;
     this.radius = 12;
 
     this.collidedPlayer = false;
@@ -22,7 +22,7 @@ class Bullet {
   }
   move() {
     this.posY -= this.speedY;
-    if (this.posY < 0) {
+    if (this.posY < 100) {
       this.speedY *= -1;
     }
   }
