@@ -8,6 +8,7 @@ class NegativeBall {
     this.damage = 1;
     this.width = 40;
     this.height = 40;
+    this.collided = false;
   }
 
   draw() {

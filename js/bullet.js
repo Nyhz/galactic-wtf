@@ -7,6 +7,8 @@ class Bullet {
     this.height = 20;
     this.speedY = 75;
     this.radius = 12;
+
+    this.collidedPlayer = false;
   }
 
   draw() {

@@ -7,6 +7,8 @@ class Player {
     this.width = 100;
     this.height = 100;
 
+    this.health = 50;
+
     this.image = new Image();
     //this.image.src = "link a imagen"
 
@@ -21,6 +23,7 @@ class Player {
     this.keys = keys;
 
     this.bullets = [];
+    this.bullet = undefined;
 
     this.setListeners();
   }
@@ -36,7 +39,7 @@ class Player {
 
   setListeners() {
     document.onkeydown = (e) => {
-      console.log(e);
+      // console.log(e);
       switch (e.key) {
         case this.keys.moveLeft:
           this.moveLeft();
@@ -68,11 +71,14 @@ class Player {
   shoot() {
     if (this.bullets.length < 1) {
       this.bullets.push(
-        new Bullet(this.ctx, this.posX, this.height, this.gameHeight)
+        (this.bullet = new Bullet(
+          this.ctx,
+          this.posX,
+          this.height,
+          this.gameHeight
+        ))
       );
     }
-
-    console.log(this.bullets);
   }
 
   // ARREGLAR COLISION DE BALA ARRIBA - PREGUNTAR A GUILLE O TEO
@@ -80,5 +86,20 @@ class Player {
     this.bullets = this.bullets.filter(
       (bull) => bull.posY > -100 && bull.posY <= this.gameHeight
     );
+  }
+
+  checkCollitionPlayerBullet() {
+    if (
+      this.bullet !== undefined &&
+      !this.bullet.collidedPlayer &&
+      this.posY < this.bullet.posY + this.bullet.height &&
+      this.posX < this.bullet.posX + this.bullet.width &&
+      this.posX + this.width > this.bullet.posX
+    ) {
+      console.log("entrando");
+      this.health -= 1;
+      this.bullet.collidedPlayer = true;
+      this.bullets = this.bullets.filter((bull) => bull.posY < this.posY);
+    }
   }
 }

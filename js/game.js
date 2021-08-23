@@ -9,14 +9,13 @@ const Game = {
   timeScore: 0,
   currentLevel: 1,
   speedMultiplier: 0,
-  negBaseBallSpeed: 8,
-  posBaseBallSpeed: 8,
+  negBaseBallSpeed: 15,
+  posBaseBallSpeed: 15,
 
   background: undefined,
   player: undefined,
   positiveBall: undefined,
   negativeBall: undefined,
-  bullet: undefined,
   positiveBalls: [],
   negativeBalls: [],
 
@@ -57,10 +56,8 @@ const Game = {
       this.drawAll();
 
       this.generatePositiveBalls();
-      this.clearPositiveBalls();
 
       this.generateNegativeBalls();
-      this.clearNegativeBalls();
 
       this.addScore();
       this.drawScore();
@@ -69,8 +66,20 @@ const Game = {
       this.printCurrentLevel();
 
       this.positiveCollition();
+      this.negativeCollition();
+      this.negativeBulletCollition();
+      this.clearPositiveBalls();
+      this.clearNegativeBalls();
+
+      this.isColission();
+
+      console.log(this.player.health);
 
       this.counter++;
+
+      this.isGameover();
+
+      // console.log(this.bullet.speedY);
     }, 25);
   },
 
@@ -140,15 +149,19 @@ const Game = {
 
   clearPositiveBalls() {
     this.positiveBalls = this.positiveBalls.filter(
-      (positive) => positive.posY <= this.height
+      (positive) => positive.collided === false
     );
 
     this.positiveBalls = this.positiveBalls.filter(
-      (removePos) => removePos.collided === false
+      (positive) => positive.posY <= this.height
     );
   },
 
   clearNegativeBalls() {
+    this.negativeBalls = this.negativeBalls.filter(
+      (negative) => negative.collided === false
+    );
+
     this.negativeBalls = this.negativeBalls.filter(
       (negative) => negative.posY <= this.height
     );
@@ -195,7 +208,7 @@ const Game = {
   },
 
   generateNegativeBalls() {
-    if (this.counter % 50 === 0) {
+    if (this.counter % 60 === 0) {
       this.negativeBalls.push(
         (this.negativeBall = new NegativeBall(
           this.ctx,
@@ -221,13 +234,13 @@ const Game = {
   // INTENTAR HACER UN SWITCH CASE?????????
   defineLevels() {
     if (this.score > 100 && this.score < 250) {
-      this.speedMultiplier = 5;
+      this.speedMultiplier = 3;
       this.currentLevel = 2;
     } else if (this.score > 250 && this.score < 400) {
-      this.speedMultiplier = 7;
+      this.speedMultiplier = 5;
       this.currentLevel = 3;
     } else if (this.score > 400 && this.score < 750) {
-      this.speedMultiplier = 10;
+      this.speedMultiplier = 7;
       this.currentLevel = 4;
     }
   },
@@ -256,22 +269,47 @@ const Game = {
     }
   },
 
-  isColission() {},
+  isColission() {
+    this.player.checkCollitionPlayerBullet();
+  },
 
   positiveCollition() {
     if (
       this.player.posX < this.positiveBall.posX + this.positiveBall.width &&
       this.player.posX + this.player.width > this.positiveBall.posX &&
       this.player.posY < this.positiveBall.posY + this.positiveBall.height &&
-      this.player.height + this.player.posY > this.positiveBall.posY
+      !this.positiveBall.collided
     ) {
       this.positiveBall.collided = true;
       this.ballScore += 20;
-
-      // this.score += 20;
-      // Sumar score, eliminar bola positiva.
     }
   },
 
-  negativeCollition() {},
+  negativeCollition() {
+    if (this.negativeBalls[0] && this.negativeBalls[0].posY >= this.height) {
+      this.player.health -= this.negativeBall.damage;
+    }
+  },
+
+  negativeBulletCollition() {
+    if (
+      this.player.bullet !== undefined &&
+      !this.negativeBall.collided &&
+      this.negativeBall.posY + this.negativeBall.height >
+        this.player.bullet.posY
+
+      // this.posX < this.bullet.posX + this.bullet.width &&
+      // this.posX + this.width > this.bullet.posX
+    ) {
+      this.negativeBall.collided = true;
+      console.log("object");
+      this.ballScore += 20;
+    }
+  },
+
+  isGameover() {
+    if (this.player.health === 0) {
+      clearInterval(this.interval);
+    }
+  },
 };
