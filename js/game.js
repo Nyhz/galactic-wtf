@@ -26,7 +26,6 @@ const Game = {
   },
 
   init() {
-    // console.log('hola');
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
     this.setDimensions();
@@ -55,6 +54,8 @@ const Game = {
       this.clear();
       this.drawAll();
 
+      this.isGameover();
+
       this.generatePositiveBalls();
 
       this.generateNegativeBalls();
@@ -69,21 +70,18 @@ const Game = {
       this.clearNegativeBalls();
       this.player.clearBullets();
 
+      this.printLives();
+
       this.isColission();
 
       console.log(this.player.health);
 
       this.counter++;
-
-      this.isGameover();
-
-      // console.log(this.bullet.speedY);
     }, 1000 / 60);
   },
 
   reset() {
     this.background = new Background(this.ctx, this.width, this.height);
-    //bolitas
 
     this.column1 = new Column(this.ctx, 0, this.width, this.height);
     this.column2 = new Column(
@@ -163,6 +161,10 @@ const Game = {
     this.negativeBalls = this.negativeBalls.filter(
       (negative) => negative.posY <= this.height
     );
+
+    this.negativeBalls = this.negativeBalls.filter(
+      (negative) => negative.reachedBottom === false
+    );
   },
 
   pickRandomColumn() {
@@ -220,9 +222,9 @@ const Game = {
   drawScore() {
     this.score = this.timeScore + this.ballScore;
 
-    this.ctx.font = "48px serif";
+    this.ctx.font = "128px serif";
     this.ctx.fillStyle = "blue";
-    this.ctx.strokeText(`Score: ${this.score}`, 75, 100);
+    this.ctx.strokeText(`Score: ${this.score}`, 300, 180);
   },
 
   addScore() {
@@ -245,12 +247,12 @@ const Game = {
 
   // COLOCAR EL SCORE DE MEJOR MANERA
   printLevel(currentLvl) {
-    this.ctx.font = "48px serif";
+    this.ctx.font = "128px serif";
     this.ctx.fillStyle = "white";
     this.ctx.fillText(
       `Current Level: ${currentLvl}`,
-      this.width / 2 - 145,
-      120
+      this.width / 2 - 425,
+      180
     );
   },
 
@@ -275,8 +277,6 @@ const Game = {
   },
 
   positiveCollition() {
-    // console.log(this.positiveBall.collided);
-
     if (
       this.player.posX < this.positiveBall.posX + this.positiveBall.width &&
       this.player.posX + this.player.width > this.positiveBall.posX &&
@@ -286,16 +286,15 @@ const Game = {
       this.positiveBall.collided = true;
       this.ballScore += this.positiveBall.points;
     }
-    // console.log(this.positiveBall.collided);
   },
 
   negativeCollition() {
     if (
       this.negativeBalls[0] &&
-      this.negativeBalls[0].posY > this.height - 10
+      this.negativeBalls[0].posY > this.height - this.player.height &&
+      !this.negativeBalls[0].reachedBottom
     ) {
-      //console.log(this.player.health);
-      console.log("entrando");
+      this.negativeBalls[0].reachedBottom = true;
       this.player.health--;
     }
   },
@@ -315,57 +314,44 @@ const Game = {
         ) {
           ball.collided = true;
           bullet.collidedNegative = true;
+          delete bullet.posY;
+          delete bullet.posX;
           this.ballScore += 10;
         }
       });
+  },
 
-    // for (let i = 0; i < this.negativeBalls.length; i++) {
-    //   console.log("hola");
-    //   if (this.player.bullet) {
-    //     console.log(
-    //       "lado arriba bala",
-    //       this.negativeBalls[i].posY + this.negativeBalls[i].height >
-    //         this.player.bullet.posY
-    //     );
-    //     console.log(
-    //       "lado izquierdo bala0",
-    //       this.player.bullet.posX <
-    //         this.negativeBalls[i].posX + this.negativeBalls[i].width
-    //     );
-    //     console.log(
-    //       "lado derecho bala",
-    //       this.player.bullet.posX,
-    //       this.player.bullet.width,
-    //       this.negativeBalls[i].posX
-    //     );
-    //     console.log(
-    //       "lado abajo bala",
-    //       this.negativeBalls[i].posY <
-    //         this.player.bullet.posY + this.player.bullet.width
-    //     );
-    //   }
-    //   if (
-    //     this.player.bullet &&
-    //     this.negativeBalls[i].posY + this.negativeBalls[i].height >
-    //       this.player.bullet.posY &&
-    //     this.player.bullet.posX <
-    //       this.negativeBalls[i].posX + this.negativeBalls[i].width &&
-    //     this.player.bullet.posX + this.player.bullet.width >
-    //       this.negativeBalls[i].posX &&
-    //     this.negativeBalls[i].posY <
-    //       this.player.bullet.posY + this.player.bullet.width
-    //   ) {
-    //     alert("hey");
-    //     //this.negativeBalls[i].collided = true;
-    //     this.ballScore += 20;
-    //     //break;
-    //   }
-    // }
+  printLives() {
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(4350, 100, 1150, 100);
+    if (this.player.health === 3) {
+      this.ctx.fillStyle = "red";
+      this.ctx.fillRect(4365, 110, 1120, 80);
+    } else if (this.player.health === 2) {
+      this.ctx.fillStyle = "red";
+      this.ctx.fillRect(4365, 110, 747, 80);
+    } else if (this.player.health === 1) {
+      this.ctx.fillStyle = "red";
+      this.ctx.fillRect(4365, 110, 373, 80);
+    }
   },
 
   isGameover() {
     if (this.player.health === 0) {
+      this.ctx.fillStyle = "red";
+      this.ctx.fillRect(4365, 110, 5, 80);
       clearInterval(this.interval);
+
+      this.ctx.font = "128px serif";
+      this.ctx.fillStyle = "red";
+      this.ctx.fillText(`GAME OVER`, this.width / 2 - 400, 1300);
+      this.ctx.font = "128px serif";
+      this.ctx.fillStyle = "white";
+      this.ctx.fillText(
+        `New Record: ${this.score}`,
+        this.width / 2 - 440,
+        1500
+      );
     }
   },
 };

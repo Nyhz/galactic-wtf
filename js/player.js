@@ -7,7 +7,7 @@ class Player {
     this.width = 100;
     this.height = 100;
 
-    this.health = 50;
+    this.health = 3;
 
     this.image = new Image();
     //this.image.src = "link a imagen"
@@ -100,7 +100,6 @@ class Player {
       this.posX < this.bullet.posX + this.bullet.width &&
       this.posX + this.width > this.bullet.posX
     ) {
-      // console.log("entra");
       this.health -= 1;
       this.bullet.collidedPlayer = true;
       this.bullets = this.bullets.filter((bull) => bull.posY < this.posY);

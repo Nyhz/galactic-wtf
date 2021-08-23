@@ -8,6 +8,7 @@ class NegativeBall {
     this.width = 150;
     this.height = 150;
 
+    this.reachedBottom = false;
     this.collided = false;
   }
 
