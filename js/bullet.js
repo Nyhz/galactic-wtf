@@ -3,18 +3,19 @@ class Bullet {
     this.ctx = ctx;
     this.posX = playerX;
     this.posY = gameH - playerH;
-    this.width = 20;
-    this.height = 20;
-    this.speedY = 75;
+    this.width = 40;
+    this.height = 40;
+    this.speedY = 40;
     this.radius = 12;
 
     this.collidedPlayer = false;
+    this.collidedNegative = false;
   }
 
   draw() {
     this.ctx.beginPath();
     this.ctx.fillStyle = "black";
-    this.ctx.fillRect(this.posX + 40, this.posY, this.width, this.height);
+    this.ctx.fillRect(this.posX + 30, this.posY, this.width, this.height);
     this.ctx.fill();
     this.ctx.closePath();
     this.move();

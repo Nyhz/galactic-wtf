@@ -5,7 +5,7 @@ class PositiveBall {
     this.posY = 0;
     this.posX = column - 20;
     this.velY = velY;
-    this.points = 100;
+    this.points = 20;
     this.width = 40;
     this.height = 40;
     this.collided = false;

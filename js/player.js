@@ -84,7 +84,7 @@ class Player {
   // ARREGLAR COLISION DE BALA ARRIBA - PREGUNTAR A GUILLE O TEO
   clearBullets() {
     this.bullets = this.bullets.filter(
-      (bull) => bull.posY > -100 && bull.posY <= this.gameHeight
+      (bull) => bull.posY > -50 && bull.posY <= this.gameHeight
     );
   }
 
@@ -96,7 +96,6 @@ class Player {
       this.posX < this.bullet.posX + this.bullet.width &&
       this.posX + this.width > this.bullet.posX
     ) {
-      console.log("entrando");
       this.health -= 1;
       this.bullet.collidedPlayer = true;
       this.bullets = this.bullets.filter((bull) => bull.posY < this.posY);

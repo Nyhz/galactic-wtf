@@ -9,7 +9,7 @@ const Game = {
   timeScore: 0,
   currentLevel: 1,
   speedMultiplier: 0,
-  negBaseBallSpeed: 15,
+  negBaseBallSpeed: 5,
   posBaseBallSpeed: 15,
 
   background: undefined,
@@ -65,22 +65,19 @@ const Game = {
       this.defineLevels();
       this.printCurrentLevel();
 
-      this.positiveCollition();
-      this.negativeCollition();
-      this.negativeBulletCollition();
+      this.isColission();
+
       this.clearPositiveBalls();
       this.clearNegativeBalls();
 
-      this.isColission();
-
-      console.log(this.player.health);
+      // console.log(this.player.health);
 
       this.counter++;
 
       this.isGameover();
 
       // console.log(this.bullet.speedY);
-    }, 25);
+    }, 1000 / 60);
   },
 
   reset() {
@@ -196,7 +193,7 @@ const Game = {
   // Para aumentar el ritmo de generacion añadir una condicion para pasar de nivel
   // cuantos mas puntos tenga el counter.
   generatePositiveBalls() {
-    if (this.counter % 120 === 0) {
+    if (this.counter % 105 === 0) {
       this.positiveBalls.push(
         (this.positiveBall = new PositiveBall(
           this.ctx,
@@ -208,7 +205,7 @@ const Game = {
   },
 
   generateNegativeBalls() {
-    if (this.counter % 60 === 0) {
+    if (this.counter % 75 === 0) {
       this.negativeBalls.push(
         (this.negativeBall = new NegativeBall(
           this.ctx,
@@ -271,9 +268,14 @@ const Game = {
 
   isColission() {
     this.player.checkCollitionPlayerBullet();
+    this.positiveCollition();
+    this.negativeCollition();
+    this.negativeBulletCollition();
   },
 
   positiveCollition() {
+    // console.log(this.positiveBall.collided);
+
     if (
       this.player.posX < this.positiveBall.posX + this.positiveBall.width &&
       this.player.posX + this.player.width > this.positiveBall.posX &&
@@ -281,30 +283,82 @@ const Game = {
       !this.positiveBall.collided
     ) {
       this.positiveBall.collided = true;
-      this.ballScore += 20;
+      this.ballScore += this.positiveBall.points;
     }
+    // console.log(this.positiveBall.collided);
   },
 
   negativeCollition() {
     if (this.negativeBalls[0] && this.negativeBalls[0].posY >= this.height) {
+      //console.log(this.player.health);
       this.player.health -= this.negativeBall.damage;
     }
   },
 
+  isValid(i) {
+    return this.player.bullet !== undefined && !this.negativeBalls[i].collided;
+  },
   negativeBulletCollition() {
-    if (
-      this.player.bullet !== undefined &&
-      !this.negativeBall.collided &&
-      this.negativeBall.posY + this.negativeBall.height >
-        this.player.bullet.posY
+    const bullet = this.player.bullet;
+    this.player.bullet &&
+      this.negativeBalls.some((ball) => {
+        console.log(bullet.posX, bullet.width, ball.posX);
+        if (
+          ball.posX < bullet.posX + bullet.width &&
+          ball.posX + ball.width > bullet.posX &&
+          ball.posY + ball.height > bullet.posY &&
+          ball.posY < bullet.posY + bullet.height
+        ) {
+          ball.collided = true;
+          bullet.collidedNegative = true;
+          this.ballScore += 20;
 
-      // this.posX < this.bullet.posX + this.bullet.width &&
-      // this.posX + this.width > this.bullet.posX
-    ) {
-      this.negativeBall.collided = true;
-      console.log("object");
-      this.ballScore += 20;
-    }
+          // alert("colision");
+        }
+      });
+
+    // for (let i = 0; i < this.negativeBalls.length; i++) {
+    //   console.log("hola");
+    //   if (this.player.bullet) {
+    //     console.log(
+    //       "lado arriba bala",
+    //       this.negativeBalls[i].posY + this.negativeBalls[i].height >
+    //         this.player.bullet.posY
+    //     );
+    //     console.log(
+    //       "lado izquierdo bala0",
+    //       this.player.bullet.posX <
+    //         this.negativeBalls[i].posX + this.negativeBalls[i].width
+    //     );
+    //     console.log(
+    //       "lado derecho bala",
+    //       this.player.bullet.posX,
+    //       this.player.bullet.width,
+    //       this.negativeBalls[i].posX
+    //     );
+    //     console.log(
+    //       "lado abajo bala",
+    //       this.negativeBalls[i].posY <
+    //         this.player.bullet.posY + this.player.bullet.width
+    //     );
+    //   }
+    //   if (
+    //     this.player.bullet &&
+    //     this.negativeBalls[i].posY + this.negativeBalls[i].height >
+    //       this.player.bullet.posY &&
+    //     this.player.bullet.posX <
+    //       this.negativeBalls[i].posX + this.negativeBalls[i].width &&
+    //     this.player.bullet.posX + this.player.bullet.width >
+    //       this.negativeBalls[i].posX &&
+    //     this.negativeBalls[i].posY <
+    //       this.player.bullet.posY + this.player.bullet.width
+    //   ) {
+    //     alert("hey");
+    //     //this.negativeBalls[i].collided = true;
+    //     this.ballScore += 20;
+    //     //break;
+    //   }
+    // }
   },
 
   isGameover() {
