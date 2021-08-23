@@ -9,7 +9,7 @@ const Game = {
   timeScore: 0,
   currentLevel: 1,
   speedMultiplier: 0,
-  negBaseBallSpeed: 5,
+  negBaseBallSpeed: 8,
   posBaseBallSpeed: 15,
 
   background: undefined,
@@ -65,12 +65,12 @@ const Game = {
       this.defineLevels();
       this.printCurrentLevel();
 
-      this.isColission();
-
       this.clearPositiveBalls();
       this.clearNegativeBalls();
 
-      // console.log(this.player.health);
+      this.isColission();
+
+      console.log(this.player.health);
 
       this.counter++;
 
@@ -205,7 +205,7 @@ const Game = {
   },
 
   generateNegativeBalls() {
-    if (this.counter % 75 === 0) {
+    if (this.counter % 45 === 0) {
       this.negativeBalls.push(
         (this.negativeBall = new NegativeBall(
           this.ctx,
@@ -289,9 +289,13 @@ const Game = {
   },
 
   negativeCollition() {
-    if (this.negativeBalls[0] && this.negativeBalls[0].posY >= this.height) {
+    if (
+      this.negativeBalls[0] &&
+      this.negativeBalls[0].posY > this.height - 10
+    ) {
       //console.log(this.player.health);
-      this.player.health -= this.negativeBall.damage;
+      console.log("entrando");
+      this.player.health--;
     }
   },
 
@@ -302,7 +306,7 @@ const Game = {
     const bullet = this.player.bullet;
     this.player.bullet &&
       this.negativeBalls.some((ball) => {
-        console.log(bullet.posX, bullet.width, ball.posX);
+        // console.log(bullet.posX, bullet.width, ball.posX);
         if (
           ball.posX < bullet.posX + bullet.width &&
           ball.posX + ball.width > bullet.posX &&
@@ -312,8 +316,6 @@ const Game = {
           ball.collided = true;
           bullet.collidedNegative = true;
           this.ballScore += 20;
-
-          // alert("colision");
         }
       });
 

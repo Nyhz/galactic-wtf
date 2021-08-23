@@ -3,11 +3,10 @@ class NegativeBall {
     this.ctx = ctx;
     // this.size = 35
     this.posY = 0;
-    this.posX = column - 20;
-    this.velY = velY;
-    this.damage = 1;
-    this.width = 40;
-    this.height = 40;
+    this.posX = column - 75;
+    this.velY = velY * 2;
+    this.width = 150;
+    this.height = 150;
 
     this.collided = false;
   }

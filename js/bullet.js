@@ -2,7 +2,7 @@ class Bullet {
   constructor(ctx, playerX, playerH, gameH) {
     this.ctx = ctx;
     this.posX = playerX;
-    this.posY = gameH - playerH;
+    this.posY = gameH - playerH - 100;
     this.width = 40;
     this.height = 40;
     this.speedY = 40;
