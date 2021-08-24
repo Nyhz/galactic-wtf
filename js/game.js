@@ -4,6 +4,7 @@ const Game = {
   width: undefined,
   height: undefined,
   counter: 0,
+  counterEvent: 0,
   score: 0,
   ballScore: 0,
   timeScore: 0,
@@ -77,8 +78,8 @@ const Game = {
       this.clearRandomBalls();
       this.player.clearBullets();
 
-      console.log("freq", this.frequency);
-      console.log("speed", this.speedMultiplier);
+      // console.log("freq", this.frequency);
+      // console.log("speed", this.speedMultiplier);
 
       this.printLives();
 
@@ -128,6 +129,7 @@ const Game = {
 
     this.positiveBalls = [];
     this.negativeBalls = [];
+    this.randomBalls = [];
 
     this.counter = 0;
   },
@@ -135,11 +137,11 @@ const Game = {
   drawAll() {
     //ARREGLAR
     this.background.draw();
-    this.column1.draw();
-    this.column2.draw();
-    this.column3.draw();
-    this.column4.draw();
-    this.column5.draw();
+    // this.column1.draw();
+    // this.column2.draw();
+    // this.column3.draw();
+    // this.column4.draw();
+    // this.column5.draw();
 
     this.positiveBalls.forEach((positive) => positive.draw());
     this.negativeBalls.forEach((negative) => negative.draw());
@@ -245,8 +247,8 @@ const Game = {
   },
 
   generateRandomBalls() {
-    if (this.counter % 50 === 0) {
-      this.negativeBalls.push(
+    if (this.counter % 500 === 0 && this.score > 1000) {
+      this.randomBalls.push(
         (this.randomBall = new RandomBall(
           this.ctx,
           this.pickRandomColumn(),
@@ -304,32 +306,41 @@ const Game = {
       this.speedMultiplier = 5;
       this.currentLevel = 3;
       this.frequency = 5;
+      this.player.setListenersReverse();
+      this.ctx.font = "128px serif";
+      this.ctx.fillStyle = "white";
+      this.ctx.fillText(`REVERSE`, this.width / 2 - 425, this.height / 2);
     } else if (this.score > 3000 && this.score < 4000) {
       this.speedMultiplier = 7;
       this.currentLevel = 4;
+      this.addHealth();
+      this.player.setListeners();
     } else if (this.score > 4000 && this.score < 5000) {
       this.speedMultiplier = 9;
       this.currentLevel = 5;
-      this.addHealth();
       this.frequency = 10;
     } else if (this.score > 5000 && this.score < 6000) {
-      this.speedMultiplier = 12;
+      this.speedMultiplier = 9;
       this.currentLevel = 6;
+      this.player.setListenersReverse();
+      this.ctx.font = "128px serif";
+      this.ctx.fillStyle = "white";
+      this.ctx.fillText(`REVERSE`, this.width / 2 - 425, this.height / 2);
     } else if (this.score > 6000 && this.score < 7000) {
-      this.speedMultiplier = 15;
+      this.speedMultiplier = 12;
       this.currentLevel = 7;
       this.addHealth();
       this.frequency = 15;
+      this.player.setListeners();
     } else if (this.score > 7000 && this.score < 8000) {
-      this.speedMultiplier = 18;
+      this.speedMultiplier = 15;
       this.currentLevel = 8;
     } else if (this.score > 8000 && this.score < 9000) {
-      this.speedMultiplier = 25;
+      this.speedMultiplier = 22;
       this.currentLevel = 9;
-      this.addHealth();
       this.frequency = 20;
     } else if (this.score > 9000 && this.score < 10000) {
-      this.speedMultiplier = 30;
+      this.speedMultiplier = 28;
       this.currentLevel = 10;
     }
   },
@@ -356,6 +367,7 @@ const Game = {
     this.negativeCollition();
     this.randomCollition();
     this.negativeBulletCollition();
+    this.deleteRandomBall();
   },
 
   positiveCollition() {
@@ -370,15 +382,27 @@ const Game = {
     }
   },
 
+  deleteRandomBall() {
+    if (this.randomBall !== undefined && this.randomBall.posY > this.height) {
+      delete this.randomBall.posY;
+      delete this.randomBall.posX;
+    }
+  },
+
   randomCollition() {
     if (
+      this.randomBall !== undefined &&
+      !this.randomBall.collided &&
       this.player.posX < this.randomBall.posX + this.randomBall.width &&
       this.player.posX + this.player.width > this.randomBall.posX &&
-      this.player.posY < this.randomBall.posY + this.randomBall.height &&
-      !this.randomBall.collided
+      this.player.posY < this.randomBall.posY + this.randomBall.height
     ) {
       this.randomBall.collided = true;
-      this.ballScore += this.randomBall.points;
+      console.log("primer if");
+      if (this.player.health < 3) {
+        this.player.health += 1;
+        console.log("segundo if");
+      }
     }
   },
 
@@ -419,7 +443,6 @@ const Game = {
 
   moveBallsRight() {
     if (this.counter % 1000 === 0) {
-      console.log("entrandoRight");
       for (let i = 0; i < this.negativeBalls.length; i++) {
         this.negativeBalls[i].posX += this.columnWidth;
         if (this.negativeBalls[i].posX > this.width) {
@@ -432,7 +455,6 @@ const Game = {
 
   moveBallsLeft() {
     if (this.counter % 1000 === 0) {
-      console.log("entrandoLeft");
       for (let i = 0; i < this.negativeBalls.length; i++) {
         this.negativeBalls[i].posX -= this.columnWidth;
         if (this.negativeBalls[i].posX < 0) {
@@ -443,10 +465,7 @@ const Game = {
     }
   },
 
-  switchMovement() {},
-
   callEvents() {
-    // console.log(this.pickRandomEvent());
     switch (this.pickRandomEvent()) {
       case 1:
         this.moveBallsRight();
@@ -460,16 +479,16 @@ const Game = {
 
   printLives() {
     this.ctx.fillStyle = "black";
-    this.ctx.fillRect(4350, 100, 1150, 100);
+    this.ctx.fillRect(3200, 100, 1150, 100);
     if (this.player.health === 3) {
       this.ctx.fillStyle = "red";
-      this.ctx.fillRect(4365, 110, 1120, 80);
+      this.ctx.fillRect(3212, 110, 1120, 80);
     } else if (this.player.health === 2) {
       this.ctx.fillStyle = "red";
-      this.ctx.fillRect(4365, 110, 747, 80);
+      this.ctx.fillRect(3212, 110, 747, 80);
     } else if (this.player.health === 1) {
       this.ctx.fillStyle = "red";
-      this.ctx.fillRect(4365, 110, 373, 80);
+      this.ctx.fillRect(3212, 110, 373, 80);
     }
   },
 

@@ -4,8 +4,8 @@ class Player {
     this.gameWidth = gameW;
     this.gameHeight = gameH;
 
-    this.width = 100;
-    this.height = 100;
+    this.width = 200;
+    this.height = 200;
 
     this.health = 3;
     this.healedFive = false;
@@ -13,7 +13,7 @@ class Player {
     this.healedNine = false;
 
     this.image = new Image();
-    //this.image.src = "link a imagen"
+    this.image.src = "/img/spaceship.png";
 
     this.posX = this.gameWidth / 2 - this.width / 2;
     this.posY = this.gameHeight - 20 - this.height;
@@ -32,9 +32,13 @@ class Player {
   }
 
   draw() {
-    // this.ctx.drawImage(this.posX, this.posY, this.width, this.height)
-    this.ctx.fillStyle = "black";
-    this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
+    this.ctx.drawImage(
+      this.image,
+      this.posX,
+      this.posY,
+      this.width,
+      this.height
+    );
 
     this.bullets.forEach((bullet) => bullet.draw());
     // this.clearBullets();
@@ -49,6 +53,23 @@ class Player {
           break;
         case this.keys.moveRight:
           this.moveRight();
+          break;
+        case this.keys.shoot:
+          this.shoot();
+          break;
+      }
+    };
+  }
+
+  setListenersReverse() {
+    document.onkeydown = (e) => {
+      // console.log(e);
+      switch (e.key) {
+        case this.keys.moveLeft:
+          this.moveRight();
+          break;
+        case this.keys.moveRight:
+          this.moveLeft();
           break;
         case this.keys.shoot:
           this.shoot();
