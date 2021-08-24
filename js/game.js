@@ -59,6 +59,7 @@ const Game = {
       this.clear();
       this.drawAll();
 
+      this.checkWin();
       this.isGameover();
 
       this.generatePositiveBalls();
@@ -78,14 +79,9 @@ const Game = {
       this.clearRandomBalls();
       this.player.clearBullets();
 
-      // console.log("freq", this.frequency);
-      // console.log("speed", this.speedMultiplier);
-
       this.printLives();
 
       this.isColission();
-
-      // console.log("Health", this.player.health);
 
       this.counter++;
     }, 1000 / 60);
@@ -135,7 +131,6 @@ const Game = {
   },
 
   drawAll() {
-    //ARREGLAR
     this.background.draw();
     // this.column1.draw();
     // this.column2.draw();
@@ -147,8 +142,6 @@ const Game = {
     this.negativeBalls.forEach((negative) => negative.draw());
     this.randomBalls.forEach((random) => random.draw());
     this.player.draw();
-
-    //dibujar bolitas this.bolitas?
   },
 
   clear() {
@@ -220,8 +213,6 @@ const Game = {
     }
   },
 
-  // Para aumentar el ritmo de generacion añadir una condicion para pasar de nivel
-  // cuantos mas puntos tenga el counter.
   generatePositiveBalls() {
     if (this.counter % 105 === 0) {
       this.positiveBalls.push(
@@ -267,7 +258,7 @@ const Game = {
   },
 
   addScore() {
-    this.timeScore = Math.floor(this.counter);
+    this.timeScore = Math.floor(this.counter / 2);
   },
 
   addHealth() {
@@ -434,7 +425,7 @@ const Game = {
           bullet.collidedNegative = true;
           delete bullet.posY;
           delete bullet.posX;
-          this.ballScore += 15;
+          this.ballScore += 25;
         }
       });
   },
@@ -508,6 +499,18 @@ const Game = {
         this.width / 2 - 340,
         1500
       );
+    }
+  },
+
+  checkWin() {
+    if (this.score >= 10000) {
+      this.ctx.fillStyle = "red";
+      this.ctx.fillRect(4365, 110, 5, 80);
+      clearInterval(this.interval);
+
+      this.ctx.font = "150px serif";
+      this.ctx.fillStyle = "teal";
+      this.ctx.fillText(`YOU WIN`, this.width / 2 - 400, 1300);
     }
   },
 };
