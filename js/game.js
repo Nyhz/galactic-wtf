@@ -9,15 +9,19 @@ const Game = {
   timeScore: 0,
   currentLevel: 1,
   speedMultiplier: 0,
-  negBaseBallSpeed: 8,
+  frequency: 5,
+  negBaseBallSpeed: 10,
   posBaseBallSpeed: 15,
+  ranBaseBallSpeed: 15,
 
   background: undefined,
   player: undefined,
   positiveBall: undefined,
   negativeBall: undefined,
+  randomBall: undefined,
   positiveBalls: [],
   negativeBalls: [],
+  randomBalls: [],
 
   keys: {
     moveLeft: "a",
@@ -34,8 +38,8 @@ const Game = {
   },
 
   setDimensions() {
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
+    this.width = window.innerWidth * 0.8;
+    this.height = window.innerHeight * 0.8;
     this.canvas.width = this.width;
     this.canvas.height = this.height;
 
@@ -57,8 +61,8 @@ const Game = {
       this.isGameover();
 
       this.generatePositiveBalls();
-
       this.generateNegativeBalls();
+      this.generateRandomBalls();
 
       this.addScore();
       this.drawScore();
@@ -66,15 +70,21 @@ const Game = {
       this.defineLevels();
       this.printCurrentLevel();
 
+      this.callEvents();
+
       this.clearPositiveBalls();
       this.clearNegativeBalls();
+      this.clearRandomBalls();
       this.player.clearBullets();
+
+      console.log("freq", this.frequency);
+      console.log("speed", this.speedMultiplier);
 
       this.printLives();
 
       this.isColission();
 
-      console.log(this.player.health);
+      // console.log("Health", this.player.health);
 
       this.counter++;
     }, 1000 / 60);
@@ -133,7 +143,7 @@ const Game = {
 
     this.positiveBalls.forEach((positive) => positive.draw());
     this.negativeBalls.forEach((negative) => negative.draw());
-
+    this.randomBalls.forEach((random) => random.draw());
     this.player.draw();
 
     //dibujar bolitas this.bolitas?
@@ -165,6 +175,21 @@ const Game = {
     this.negativeBalls = this.negativeBalls.filter(
       (negative) => negative.reachedBottom === false
     );
+  },
+
+  clearRandomBalls() {
+    this.randomBalls = this.randomBalls.filter(
+      (random) => random.collided === false
+    );
+
+    this.randomBalls = this.randomBalls.filter(
+      (random) => random.posY <= this.height
+    );
+  },
+
+  pickRandomEvent() {
+    let randomNum = Math.floor(Math.random() * 2) + 1;
+    return randomNum;
   },
 
   pickRandomColumn() {
@@ -208,12 +233,24 @@ const Game = {
   },
 
   generateNegativeBalls() {
-    if (this.counter % 45 === 0) {
+    if (this.counter % (55 - this.frequency) === 0) {
       this.negativeBalls.push(
         (this.negativeBall = new NegativeBall(
           this.ctx,
           this.pickRandomColumn(),
           this.negBaseBallSpeed + this.speedMultiplier
+        ))
+      );
+    }
+  },
+
+  generateRandomBalls() {
+    if (this.counter % 50 === 0) {
+      this.negativeBalls.push(
+        (this.randomBall = new RandomBall(
+          this.ctx,
+          this.pickRandomColumn(),
+          this.ranBaseBallSpeed + this.speedMultiplier
         ))
       );
     }
@@ -228,20 +265,72 @@ const Game = {
   },
 
   addScore() {
-    this.timeScore = Math.floor(this.counter / 10);
+    this.timeScore = Math.floor(this.counter);
+  },
+
+  addHealth() {
+    if (
+      !this.player.healedFive &&
+      this.player.health < 3 &&
+      this.currentLevel === 5
+    ) {
+      this.player.health += 1;
+      this.player.healedFive = true;
+    }
+    if (
+      !this.player.healedSeven &&
+      this.player.health < 3 &&
+      this.currentLevel === 7
+    ) {
+      this.player.health += 1;
+      this.player.healedSeven = true;
+    }
+    if (
+      !this.player.healedNine &&
+      this.player.health < 3 &&
+      this.currentLevel === 9
+    ) {
+      this.player.health += 1;
+      this.player.healedNine = true;
+    }
   },
 
   // INTENTAR HACER UN SWITCH CASE?????????
   defineLevels() {
-    if (this.score > 250 && this.score < 500) {
+    if (this.score > 1000 && this.score <= 2000) {
       this.speedMultiplier = 3;
       this.currentLevel = 2;
-    } else if (this.score > 500 && this.score < 1000) {
-      this.speedMultiplier = 4;
-      this.currentLevel = 3;
-    } else if (this.score > 1000 && this.score < 2500) {
+    } else if (this.score > 2000 && this.score < 3000) {
       this.speedMultiplier = 5;
+      this.currentLevel = 3;
+      this.frequency = 5;
+    } else if (this.score > 3000 && this.score < 4000) {
+      this.speedMultiplier = 7;
       this.currentLevel = 4;
+    } else if (this.score > 4000 && this.score < 5000) {
+      this.speedMultiplier = 9;
+      this.currentLevel = 5;
+      this.addHealth();
+      this.frequency = 10;
+    } else if (this.score > 5000 && this.score < 6000) {
+      this.speedMultiplier = 12;
+      this.currentLevel = 6;
+    } else if (this.score > 6000 && this.score < 7000) {
+      this.speedMultiplier = 15;
+      this.currentLevel = 7;
+      this.addHealth();
+      this.frequency = 15;
+    } else if (this.score > 7000 && this.score < 8000) {
+      this.speedMultiplier = 18;
+      this.currentLevel = 8;
+    } else if (this.score > 8000 && this.score < 9000) {
+      this.speedMultiplier = 25;
+      this.currentLevel = 9;
+      this.addHealth();
+      this.frequency = 20;
+    } else if (this.score > 9000 && this.score < 10000) {
+      this.speedMultiplier = 30;
+      this.currentLevel = 10;
     }
   },
 
@@ -256,23 +345,16 @@ const Game = {
     );
   },
 
-  //INTENTAR HACER UN SWITCH CASE??????
+  // INTENTAR HACER UN SWITCH CASE??????
   printCurrentLevel() {
-    if (this.score < 100) {
-      this.printLevel(this.currentLevel);
-    } else if (this.score > 100) {
-      this.printLevel(this.currentLevel);
-    } else if (this.score > 250) {
-      this.printLevel(this.currentLevel);
-    } else if (this.score > 400) {
-      this.printLevel(this.currentLevel);
-    }
+    this.printLevel(this.currentLevel);
   },
 
   isColission() {
     this.player.checkCollitionPlayerBullet();
     this.positiveCollition();
     this.negativeCollition();
+    this.randomCollition();
     this.negativeBulletCollition();
   },
 
@@ -285,6 +367,18 @@ const Game = {
     ) {
       this.positiveBall.collided = true;
       this.ballScore += this.positiveBall.points;
+    }
+  },
+
+  randomCollition() {
+    if (
+      this.player.posX < this.randomBall.posX + this.randomBall.width &&
+      this.player.posX + this.player.width > this.randomBall.posX &&
+      this.player.posY < this.randomBall.posY + this.randomBall.height &&
+      !this.randomBall.collided
+    ) {
+      this.randomBall.collided = true;
+      this.ballScore += this.randomBall.points;
     }
   },
 
@@ -316,9 +410,52 @@ const Game = {
           bullet.collidedNegative = true;
           delete bullet.posY;
           delete bullet.posX;
-          this.ballScore += 10;
+          this.ballScore += 15;
         }
       });
+  },
+
+  /************* EVENTS **************/
+
+  moveBallsRight() {
+    if (this.counter % 1000 === 0) {
+      console.log("entrandoRight");
+      for (let i = 0; i < this.negativeBalls.length; i++) {
+        this.negativeBalls[i].posX += this.columnWidth;
+        if (this.negativeBalls[i].posX > this.width) {
+          delete this.negativeBalls[i].posX;
+          delete this.negativeBalls[i].posY;
+        }
+      }
+    }
+  },
+
+  moveBallsLeft() {
+    if (this.counter % 1000 === 0) {
+      console.log("entrandoLeft");
+      for (let i = 0; i < this.negativeBalls.length; i++) {
+        this.negativeBalls[i].posX -= this.columnWidth;
+        if (this.negativeBalls[i].posX < 0) {
+          delete this.negativeBalls[i].posX;
+          delete this.negativeBalls[i].posY;
+        }
+      }
+    }
+  },
+
+  switchMovement() {},
+
+  callEvents() {
+    // console.log(this.pickRandomEvent());
+    switch (this.pickRandomEvent()) {
+      case 1:
+        this.moveBallsRight();
+        break;
+
+      case 2:
+        this.moveBallsLeft();
+        break;
+    }
   },
 
   printLives() {
@@ -348,8 +485,8 @@ const Game = {
       this.ctx.font = "128px serif";
       this.ctx.fillStyle = "white";
       this.ctx.fillText(
-        `New Record: ${this.score}`,
-        this.width / 2 - 440,
+        `Points: ${this.score + 1}`,
+        this.width / 2 - 340,
         1500
       );
     }

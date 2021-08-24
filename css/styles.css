@@ -1,4 +1,18 @@
 * {
   margin: 0;
   padding: 0;
+  background-image: url(https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/9b1fe25a7e8e3ea.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+canvas {
+  padding: 0;
+  margin: auto;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

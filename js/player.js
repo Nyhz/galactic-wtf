@@ -8,6 +8,9 @@ class Player {
     this.height = 100;
 
     this.health = 3;
+    this.healedFive = false;
+    this.healedSeven = false;
+    this.healedNine = false;
 
     this.image = new Image();
     //this.image.src = "link a imagen"

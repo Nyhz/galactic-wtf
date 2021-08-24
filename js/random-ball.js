@@ -1,4 +1,4 @@
-class PositiveBall {
+class RandomBall {
   constructor(ctx, column, velY) {
     this.ctx = ctx;
     // this.size = 35
@@ -12,7 +12,7 @@ class PositiveBall {
   }
 
   draw() {
-    this.ctx.fillStyle = "blue";
+    this.ctx.fillStyle = "yellow";
     this.ctx.fillRect(this.posX, this.posY, this.width, this.height);
     this.move();
   }
@@ -21,5 +21,3 @@ class PositiveBall {
     this.posY += this.velY;
   }
 }
-
-// METER BONUS - BOLAS CON EFECTOS POSITIVOS
