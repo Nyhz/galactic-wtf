@@ -5,6 +5,8 @@ const Game = {
   height: undefined,
   counter: 0,
   counterEvent: 0,
+  framesCounter: 0,
+  framesCounterTwo: 0,
   score: 0,
   ballScore: 0,
   timeScore: 0,
@@ -21,7 +23,8 @@ const Game = {
   negativeBall: undefined,
   randomBall: undefined,
 
-  coinImage: undefined,
+  explosionImg: undefined,
+  gameOverImg: undefined,
 
   positiveBalls: [],
   negativeBalls: [],
@@ -29,8 +32,11 @@ const Game = {
 
   keys: {
     moveLeft: "a",
+    moveLeftOpt: "ArrowLeft",
     moveRight: "d",
+    moveRightOpt: "ArrowRight",
     shoot: "w",
+    shootOpt: " ",
   },
 
   init() {
@@ -59,6 +65,14 @@ const Game = {
     this.reset();
 
     this.interval = setInterval(() => {
+      this.framesCounter > 5000
+        ? (this.framesCounter = 0)
+        : this.framesCounter++;
+
+      this.framesCounterTwo > 5000
+        ? (this.framesCounterTwo = 0)
+        : this.framesCounterTwo++;
+
       this.clear();
       this.drawAll();
 
@@ -93,6 +107,7 @@ const Game = {
 
   reset() {
     this.background = new Background(this.ctx, this.width, this.height);
+    this.background.bgMusic.play();
 
     this.column1 = new Column(this.ctx, 0, this.width, this.height);
     this.column2 = new Column(
@@ -134,6 +149,8 @@ const Game = {
     this.counter = 0;
 
     this.loadCoin();
+    this.loadExplosion();
+    this.loadGameOver();
   },
 
   drawAll() {
@@ -145,8 +162,10 @@ const Game = {
     // this.column4.draw();
     // this.column5.draw();
 
-    this.positiveBalls.forEach((positive) => positive.draw());
-    this.negativeBalls.forEach((negative) => negative.draw());
+    this.positiveBalls.forEach((positive) => positive.draw(this.framesCounter));
+    this.negativeBalls.forEach((negative) =>
+      negative.draw(this.framesCounterTwo)
+    );
     this.randomBalls.forEach((random) => random.draw());
     this.player.draw();
   },
@@ -424,6 +443,7 @@ const Game = {
     ) {
       this.negativeBalls[0].reachedBottom = true;
       this.player.health--;
+      this.negativeBall.asteroidHit.play();
     }
   },
 
@@ -533,22 +553,47 @@ const Game = {
     }
   },
 
+  loadGameOver() {
+    this.gameOverImg = new Image();
+    this.gameOverImg.src = "/img/gameover.png";
+  },
+
+  loadExplosion() {
+    this.explosionImg = new Image();
+    this.explosionImg.src = "/img/explosionGafas.png";
+  },
   isGameover() {
     if (this.player.health === 0) {
       this.ctx.fillStyle = "red";
       this.ctx.fillRect(4365, 110, 5, 80);
       clearInterval(this.interval);
 
-      this.ctx.font = "128px serif";
-      this.ctx.fillStyle = "red";
-      this.ctx.fillText(`GAME OVER`, this.width / 2 - 400, 1300);
-      this.ctx.font = "128px serif";
-      this.ctx.fillStyle = "white";
-      this.ctx.fillText(
-        `Points: ${this.score + 1}`,
-        this.width / 2 - 340,
-        1500
+      this.ctx.drawImage(
+        this.explosionImg,
+        this.width / 2 - 1000,
+        this.height / 2 - 1000,
+        2000,
+        2000
       );
+
+      this.ctx.drawImage(
+        this.gameOverImg,
+        this.width / 2 - 1000,
+        this.height / 2 + 350,
+        2000,
+        500
+      );
+      // this.ctx.font = "128px serif";
+      // this.ctx.fillStyle = "red";
+      // this.ctx.fillText(`GAME OVER`, this.width / 2 - 400, 1300);
+      // this.ctx.font = "128px serif";
+      // this.ctx.fillStyle = "white";
+      // this.ctx.fillText(
+      //   `Points: ${this.score + 1}`,
+      //   this.width / 2 - 340,
+      //   1500
+      // );
+      this.background.bgMusic.pause();
     }
   },
 

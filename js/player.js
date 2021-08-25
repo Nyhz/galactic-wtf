@@ -14,6 +14,9 @@ class Player {
 
     this.takenCoins = 0;
 
+    this.laser = new Audio();
+    this.laser.src = "/sounds/shootedit.mp3";
+
     this.image = new Image();
     this.image.src = "/img/spaceship.png";
 
@@ -51,12 +54,15 @@ class Player {
       // console.log(e);
       switch (e.key) {
         case this.keys.moveLeft:
+        case this.keys.moveLeftOpt:
           this.moveLeft();
           break;
         case this.keys.moveRight:
+        case this.keys.moveRightOpt:
           this.moveRight();
           break;
         case this.keys.shoot:
+        case this.keys.shootOpt:
           this.shoot();
           break;
       }
@@ -68,12 +74,15 @@ class Player {
       // console.log(e);
       switch (e.key) {
         case this.keys.moveLeft:
+        case this.keys.moveLeftOpt:
           this.moveRight();
           break;
         case this.keys.moveRight:
+        case this.keys.moveRightOpt:
           this.moveLeft();
           break;
         case this.keys.shoot:
+        case this.keys.shootOpt:
           this.shoot();
           break;
       }
@@ -105,6 +114,8 @@ class Player {
         ))
       );
     }
+    this.laser.currentTime = 0;
+    this.laser.play();
   }
 
   // ARREGLAR COLISION DE BALA ARRIBA - PREGUNTAR A GUILLE O TEO

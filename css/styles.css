@@ -63,6 +63,63 @@ html {
   font-size: 15rem;
 }
 
+.text_container h1 {
+  margin-bottom: 5%;
+  font-family: "Galactic", sans-serif;
+  font-size: 40rem;
+  -webkit-animation: breathing 1s ease-out infinite normal;
+  animation: breathing 2s ease-out infinite normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+@-webkit-keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  60% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  100% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+@keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+
+  60% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  100% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
 .text_container h2 {
   text-align: start;
   font-size: 10rem;
@@ -76,12 +133,15 @@ html {
   line-height: 150px;
 }
 
-button {
-  height: 500px;
-  width: 500px;
+.text_container li:hover {
+  color: yellow;
 }
 
 #start {
   font-family: "Galactic", sans-serif;
   font-size: 30rem;
+}
+
+#start:hover {
+  color: yellow;
 }

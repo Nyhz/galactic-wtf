@@ -17,22 +17,55 @@ class NegativeBall {
 
     this.eventMoved = false;
 
-    this.meteorite = new Image();
-    this.meteorite.src = "/img/meteorite.png";
+    this.image = new Image();
+    this.image.src = "/img/asteroids.png";
+
+    this.image.frames = 4;
+    this.image.framesIndex = 0;
+
+    this.asteroidHit = new Audio();
+    this.asteroidHit.src = "/sounds/asteroidhit.mp3";
   }
 
-  draw() {
-    this.ctx.drawImage(
-      this.meteorite,
-      this.posX,
-      this.posY,
-      this.width,
-      this.height
-    );
+  draw(framesCounter) {
+    this.turn(framesCounter);
+    // this.ctx.drawImage(
+    //   this.meteorite,
+    //   this.posX,
+    //   this.posY,
+    //   this.width,
+    //   this.height
+    // );
     this.move();
   }
 
   move() {
     this.posY += this.velY;
+  }
+
+  turn(framesCounter) {
+    this.ctx.drawImage(
+      this.image,
+      this.image.framesIndex * Math.floor(this.image.width / this.image.frames),
+      0,
+      Math.floor(this.image.width / this.image.frames),
+      this.image.height,
+      this.posX,
+      this.posY,
+      this.width,
+      this.height
+    );
+
+    this.animateSprite(framesCounter);
+  }
+
+  animateSprite(framesCounter) {
+    if (framesCounter % 4 === 0) {
+      this.image.framesIndex++;
+    }
+
+    if (this.image.framesIndex >= this.image.frames) {
+      this.image.framesIndex = 0;
+    }
   }
 }

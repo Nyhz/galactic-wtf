@@ -10,23 +10,53 @@ class PositiveBall {
     this.height = 150;
     this.collided = false;
 
-    this.coinImg = new Image();
-    this.coinImg.src = "/img/coin.png";
+    this.image = new Image();
+    this.image.src = "/img/coinframes.png";
+
+    this.image.frames = 4;
+    this.image.framesIndex = 0;
   }
 
-  draw() {
-    this.ctx.drawImage(
-      this.coinImg,
-      this.posX,
-      this.posY,
-      this.width,
-      this.height
-    );
+  draw(framesCounter) {
+    this.turn(framesCounter);
+    // this.ctx.drawImage(
+    //   this.coinImg,
+    //   this.posX,
+    //   this.posY,
+    //   this.width,
+    //   this.height
+    // );
     this.move();
   }
 
   move() {
     this.posY += this.velY;
+  }
+
+  turn(framesCounter) {
+    this.ctx.drawImage(
+      this.image,
+      this.image.framesIndex * Math.floor(this.image.width / this.image.frames),
+      0,
+      Math.floor(this.image.width / this.image.frames),
+      this.image.height,
+      this.posX,
+      this.posY,
+      this.width,
+      this.height
+    );
+
+    this.animateSprite(framesCounter);
+  }
+
+  animateSprite(framesCounter) {
+    if (framesCounter % 4 === 0) {
+      this.image.framesIndex++;
+    }
+
+    if (this.image.framesIndex >= this.image.frames) {
+      this.image.framesIndex = 0;
+    }
   }
 }
 
