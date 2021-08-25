@@ -15,6 +15,8 @@ class NegativeBall {
     this.frequency7 = false;
     this.frequency9 = false;
 
+    this.eventMoved = false;
+
     this.meteorite = new Image();
     this.meteorite.src = "/img/meteorite.png";
   }

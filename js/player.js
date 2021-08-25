@@ -12,6 +12,8 @@ class Player {
     this.healedSeven = false;
     this.healedNine = false;
 
+    this.takenCoins = 0;
+
     this.image = new Image();
     this.image.src = "/img/spaceship.png";
 

@@ -20,6 +20,9 @@ const Game = {
   positiveBall: undefined,
   negativeBall: undefined,
   randomBall: undefined,
+
+  coinImage: undefined,
+
   positiveBalls: [],
   negativeBalls: [],
   randomBalls: [],
@@ -68,6 +71,7 @@ const Game = {
 
       this.addScore();
       this.drawScore();
+      this.printCoins();
 
       this.defineLevels();
       this.printCurrentLevel();
@@ -128,10 +132,13 @@ const Game = {
     this.randomBalls = [];
 
     this.counter = 0;
+
+    this.loadCoin();
   },
 
   drawAll() {
     this.background.draw();
+    this.background.drawLoop();
     // this.column1.draw();
     // this.column2.draw();
     // this.column3.draw();
@@ -253,8 +260,8 @@ const Game = {
     this.score = this.timeScore + this.ballScore;
 
     this.ctx.font = "128px serif";
-    this.ctx.fillStyle = "blue";
-    this.ctx.strokeText(`Score: ${this.score}`, 300, 180);
+    this.ctx.fillStyle = "green";
+    this.ctx.fillText(`Score: ${this.score}`, 300, 180);
   },
 
   addScore() {
@@ -352,6 +359,19 @@ const Game = {
     this.printLevel(this.currentLevel);
   },
 
+  loadCoin() {
+    this.coinImage = new Image();
+    this.coinImage.src = "/img/coin.png";
+  },
+
+  printCoins() {
+    this.ctx.drawImage(this.coinImage, 300, 300);
+
+    this.ctx.font = "128px serif";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText(`${this.player.takenCoins}`, 520, 460);
+  },
+
   isColission() {
     this.player.checkCollitionPlayerBullet();
     this.positiveCollition();
@@ -369,6 +389,7 @@ const Game = {
       !this.positiveBall.collided
     ) {
       this.positiveBall.collided = true;
+      this.player.takenCoins += 1;
       this.ballScore += this.positiveBall.points;
     }
   },
@@ -389,10 +410,8 @@ const Game = {
       this.player.posY < this.randomBall.posY + this.randomBall.height
     ) {
       this.randomBall.collided = true;
-      console.log("primer if");
       if (this.player.health < 3) {
         this.player.health += 1;
-        console.log("segundo if");
       }
     }
   },
@@ -433,7 +452,7 @@ const Game = {
   /************* EVENTS **************/
 
   moveBallsRight() {
-    if (this.counter % 1000 === 0) {
+    if (this.counter % 950 === 0) {
       for (let i = 0; i < this.negativeBalls.length; i++) {
         this.negativeBalls[i].posX += this.columnWidth;
         if (this.negativeBalls[i].posX > this.width) {
@@ -444,8 +463,27 @@ const Game = {
     }
   },
 
+  // moveBallsLeft() {
+  //   if (this.counter % 950 === 0) {
+  //     console.log("loololl");
+  //     for (let i = 0; i < this.negativeBalls.length; i++) {
+  //       if (!this.negativeBalls[i].eventMoved) {
+  //         for (let j = 0; j < this.negativeBalls.length; j++) {
+  //           if (
+  //             this.negativeBalls[j].posX >=
+  //             this.negativeBalls[j].posX - this.columnWidth
+  //           ) {
+  //             this.negativeBalls[j].posX -= this.negativeBalls[j].velX;
+  //           }
+  //         }
+  //         this.negativeBalls[i].eventMoved = true;
+  //       }
+  //     }
+  //   }
+  // },
+
   moveBallsLeft() {
-    if (this.counter % 1000 === 0) {
+    if (this.counter % 950 === 0) {
       for (let i = 0; i < this.negativeBalls.length; i++) {
         this.negativeBalls[i].posX -= this.columnWidth;
         if (this.negativeBalls[i].posX < 0) {
@@ -456,7 +494,19 @@ const Game = {
     }
   },
 
+  slowBalls() {
+    if (this.player.takenCoins === 10) {
+      console.log("lol");
+      let counterTwo = this.counter;
+      this.negativeBalls.forEach((negative) => {
+        negative.velY = 5;
+      });
+      this.player.takenCoins = 0;
+    }
+  },
+
   callEvents() {
+    this.slowBalls();
     switch (this.pickRandomEvent()) {
       case 1:
         this.moveBallsRight();

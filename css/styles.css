@@ -9,9 +9,10 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  font-family: "Orbitron", sans-serif;
 }
 
-canvas {
+#canvas {
   padding: 0;
   margin: auto;
   display: block;
@@ -21,4 +22,66 @@ canvas {
   left: 0;
   right: 0;
   border: 5px solid black;
+}
+
+#canvasHidden {
+  display: none;
+}
+
+.menu_container {
+  color: lightgray;
+  border-radius: 15%;
+  background-image: url(https://lh3.googleusercontent.com/proxy/j-StljxCI2JK30lTFCIGxBxT2Ti5Q1Q8Guo-ie95vJjmkp0KNHTlqxYlsVW0utqs3QtaAXJZ-5Coixsr);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50%;
+  height: 80%;
+  padding: 0;
+  margin: auto;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.menu_container_hidden {
+  display: none;
+}
+
+.text_container {
+  text-align: center;
+  font-size: 75px;
+  margin-top: 5%;
+  padding: 5%;
+}
+
+.text_container h1 {
+  margin-bottom: 5%;
+  font-size: 15rem;
+}
+
+.text_container h2 {
+  text-align: start;
+  font-size: 10rem;
+}
+
+.text_container li {
+  text-align: start;
+  text-decoration: none;
+  list-style: none;
+  font-size: 5rem;
+  line-height: 150px;
+}
+
+button {
+  height: 500px;
+  width: 500px;
+}
+
+#start {
+  font-family: "Galactic", sans-serif;
+  font-size: 30rem;
 }
