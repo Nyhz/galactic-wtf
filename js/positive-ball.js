@@ -11,7 +11,7 @@ class PositiveBall {
     this.collided = false;
 
     this.image = new Image();
-    this.image.src = "/img/coinframes.png";
+    this.image.src = "img/coinframes.png";
 
     this.image.frames = 4;
     this.image.framesIndex = 0;

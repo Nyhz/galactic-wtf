@@ -5,14 +5,14 @@ class Background {
     this.height = h;
     this.image = new Image();
     this.image2 = new Image();
-    this.image.src = "/img/bgbg.jpg";
-    this.image2.src = "/img/bgbg.jpg";
+    this.image.src = "img/bgbg.jpg";
+    this.image2.src = "img/bgbg.jpg";
     this.posX = 0;
     this.posY = 0;
     this.imageVelY = 2;
 
     this.bgMusic = new Audio();
-    this.bgMusic.src = "/sounds/ingame.mp3";
+    this.bgMusic.src = "sounds/ingame.mp3";
   }
 
   draw() {

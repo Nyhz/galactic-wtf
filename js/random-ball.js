@@ -11,10 +11,10 @@ class RandomBall {
     this.collided = false;
 
     this.healthImg = new Image();
-    this.healthImg.src = "/img/oneupimg.png";
+    this.healthImg.src = "img/oneupimg.png";
 
     this.healAudio = new Audio();
-    this.healAudio.src = "/sounds/healsound.mp3";
+    this.healAudio.src = "sounds/healsound.mp3";
   }
 
   draw() {

@@ -15,10 +15,10 @@ class Player {
     this.takenCoins = 0;
 
     this.laser = new Audio();
-    this.laser.src = "/sounds/shootedit.mp3";
+    this.laser.src = "sounds/shootedit.mp3";
 
     this.image = new Image();
-    this.image.src = "/img/spaceship.png";
+    this.image.src = "img/spaceship.png";
 
     this.posX = this.gameWidth / 2 - this.width / 2;
     this.posY = this.gameHeight - 20 - this.height;

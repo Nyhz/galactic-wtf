@@ -18,13 +18,13 @@ class NegativeBall {
     this.eventMoved = false;
 
     this.image = new Image();
-    this.image.src = "/img/asteroidframes.png";
+    this.image.src = "img/asteroidframes.png";
 
     this.image.frames = 8;
     this.image.framesIndex = 0;
 
     this.asteroidHit = new Audio();
-    this.asteroidHit.src = "/sounds/asteroidhit.mp3";
+    this.asteroidHit.src = "sounds/asteroidhit.mp3";
   }
 
   draw(framesCounter) {

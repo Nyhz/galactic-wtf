@@ -12,7 +12,7 @@ class Bullet {
     this.collidedNegative = false;
 
     this.laser = new Image();
-    this.laser.src = "/img/pixellaser.png";
+    this.laser.src = "img/pixellaser.png";
   }
 
   draw() {

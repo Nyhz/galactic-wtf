@@ -556,22 +556,22 @@ const Game = {
 
   loadAssets() {
     this.coinImage = new Image();
-    this.coinImage.src = "/img/coin.png";
+    this.coinImage.src = "img/coin.png";
 
     this.hpImg = new Image();
-    this.hpImg.src = "/img/spaceship.png";
+    this.hpImg.src = "img/spaceship.png";
 
     this.explosionImg = new Image();
-    this.explosionImg.src = "/img/explosionGafas.png";
+    this.explosionImg.src = "img/explosionGafas.png";
 
     this.gameOverImg = new Image();
-    this.gameOverImg.src = "/img/gameover.png";
+    this.gameOverImg.src = "img/gameover.png";
 
     this.coinAudio = new Audio();
-    this.coinAudio.src = "/sounds/takecoin.mp3";
+    this.coinAudio.src = "sounds/takecoin.mp3";
 
     this.gameOverAudio = new Audio();
-    this.gameOverAudio.src = "/sounds/gameoversound.mp3";
+    this.gameOverAudio.src = "sounds/gameoversound.mp3";
   },
 
   isGameover() {
