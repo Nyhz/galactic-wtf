@@ -9,7 +9,7 @@ class Background {
     this.image2.src = "img/bgbg.jpg";
     this.posX = 0;
     this.posY = 0;
-    this.imageVelY = 2;
+    this.imageVelY = 1;
 
     this.bgMusic = new Audio();
     this.bgMusic.src = "sounds/ingame.mp3";
@@ -26,9 +26,10 @@ class Background {
 
     this.posY += this.imageVelY;
 
-    if (this.posY >= this.height) {
-      this.posY = 0 - this.height;
-    }
+    // if (this.posY >= this.height) {
+    //   console.log("object");
+    //   this.posY = 0 - this.height;
+    // }
   }
 
   drawLoop() {

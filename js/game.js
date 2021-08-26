@@ -24,6 +24,7 @@ const Game = {
   randomBall: undefined,
 
   explosionImg: undefined,
+  winImg: undefined,
   gameOverImg: undefined,
   hpImg: undefined,
 
@@ -565,6 +566,9 @@ const Game = {
     this.explosionImg = new Image();
     this.explosionImg.src = "img/explosionGafas.png";
 
+    this.winImg = new Image();
+    this.winImg.src = "img/youwin.png";
+
     this.gameOverImg = new Image();
     this.gameOverImg.src = "img/gameover.png";
 
@@ -613,15 +617,26 @@ const Game = {
   },
 
   checkWin() {
-    if (this.score >= 10000) {
+    if (this.score >= 1000) {
       this.ctx.fillStyle = "red";
       this.ctx.fillRect(1454.9, 36.6, 1.6, 26.6);
       this.winAudio.play();
+      this.background.bgMusic.pause();
       clearInterval(this.interval);
 
-      this.ctx.font = "50px serif";
-      this.ctx.fillStyle = "teal";
-      this.ctx.fillText(`YOU WIN`, this.width / 2 - 133.3, 432.9);
+      this.ctx.drawImage(
+        this.winImg,
+        this.width / 2 - 600,
+        this.height / 2 - 250
+      );
+
+      let restartButton = document.querySelector(".restart_container_hidden");
+      restartButton.classList.add("restart_container");
+      restartButton.classList.remove("restart_container_hidden");
+
+      let menuButton = document.querySelector(".menu_container_hidden");
+      menuButton.classList.add("menu_container");
+      menuButton.classList.remove("menu_container_hidden");
     }
   },
 };
