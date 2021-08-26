@@ -11,7 +11,7 @@ class RandomBall {
     this.collided = false;
 
     this.healthImg = new Image();
-    this.healthImg.src = "/img/1up.png";
+    this.healthImg.src = "/img/oneupimg.png";
 
     this.healAudio = new Audio();
     this.healAudio.src = "/sounds/healsound.mp3";

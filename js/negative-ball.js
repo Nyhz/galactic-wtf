@@ -18,9 +18,9 @@ class NegativeBall {
     this.eventMoved = false;
 
     this.image = new Image();
-    this.image.src = "/img/asteroids.png";
+    this.image.src = "/img/asteroidframes.png";
 
-    this.image.frames = 4;
+    this.image.frames = 8;
     this.image.framesIndex = 0;
 
     this.asteroidHit = new Audio();
@@ -60,7 +60,7 @@ class NegativeBall {
   }
 
   animateSprite(framesCounter) {
-    if (framesCounter % 4 === 0) {
+    if (framesCounter % 8 === 0) {
       this.image.framesIndex++;
     }
 

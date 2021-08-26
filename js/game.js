@@ -155,16 +155,40 @@ const Game = {
     this.counter = 0;
 
     this.loadAssets();
+    this.hideRestart();
+    this.hideMenu();
+
+    this.score = 0;
+    this.counter = 0;
+    this.counterEvent = 0;
+    this.framesCounter = 0;
+    this.framesCounterTwo = 0;
+    this.ballScore = 0;
+    this.timeScore = 0;
+    this.currentLevel = 1;
+    this.speedMultiplier = 0;
+    this.frequency = 5;
+  },
+
+  hideRestart() {
+    let restartButton = document.getElementById("restart_id");
+    if (restartButton.classList.contains("restart_container")) {
+      restartButton.classList.add("restart_container_hidden");
+      restartButton.classList.remove("restart_container");
+    }
+  },
+
+  hideMenu() {
+    let menuButton = document.getElementById("menu_id");
+    if (menuButton.classList.contains("menu_container")) {
+      menuButton.classList.add("menu_container_hidden");
+      menuButton.classList.remove("menu_container");
+    }
   },
 
   drawAll() {
     this.background.draw();
     this.background.drawLoop();
-    // this.column1.draw();
-    // this.column2.draw();
-    // this.column3.draw();
-    // this.column4.draw();
-    // this.column5.draw();
 
     this.positiveBalls.forEach((positive) => positive.draw(this.framesCounter));
     this.negativeBalls.forEach((negative) =>
@@ -318,7 +342,6 @@ const Game = {
     }
   },
 
-  // INTENTAR HACER UN SWITCH CASE?????????
   defineLevels() {
     if (this.score > 1000 && this.score <= 2000) {
       this.speedMultiplier = 3;
@@ -341,39 +364,37 @@ const Game = {
       this.currentLevel = 5;
       this.frequency = 10;
     } else if (this.score > 5000 && this.score < 6000) {
-      this.speedMultiplier = 9;
+      this.speedMultiplier = 11;
       this.currentLevel = 6;
       this.player.setListenersReverse();
       this.ctx.font = "128px 'Press Start 2P'";
       this.ctx.fillStyle = "white";
       this.ctx.fillText(`REVERSE`, this.width / 2 - 425, this.height / 2);
     } else if (this.score > 6000 && this.score < 7000) {
-      this.speedMultiplier = 12;
+      this.speedMultiplier = 13;
       this.currentLevel = 7;
       this.addHealth();
-      this.frequency = 18;
+      this.frequency = 15;
       this.player.setListeners();
     } else if (this.score > 7000 && this.score < 8000) {
       this.speedMultiplier = 15;
       this.currentLevel = 8;
     } else if (this.score > 8000 && this.score < 9000) {
-      this.speedMultiplier = 22;
+      this.speedMultiplier = 20;
       this.currentLevel = 9;
-      this.frequency = 30;
+      this.frequency = 20;
     } else if (this.score > 9000 && this.score < 10000) {
-      this.speedMultiplier = 28;
+      this.speedMultiplier = 25;
       this.currentLevel = 10;
     }
   },
 
-  // COLOCAR EL SCORE DE MEJOR MANERA
   printLevel(currentLvl) {
     this.ctx.font = "110px 'Press Start 2'P";
     this.ctx.fillStyle = "white";
     this.ctx.fillText(`Level: ${currentLvl}`, this.width / 2 - 525, 180);
   },
 
-  // INTENTAR HACER UN SWITCH CASE??????
   printCurrentLevel() {
     this.printLevel(this.currentLevel);
   },
@@ -481,25 +502,6 @@ const Game = {
     }
   },
 
-  // moveBallsLeft() {
-  //   if (this.counter % 950 === 0) {
-  //     console.log("loololl");
-  //     for (let i = 0; i < this.negativeBalls.length; i++) {
-  //       if (!this.negativeBalls[i].eventMoved) {
-  //         for (let j = 0; j < this.negativeBalls.length; j++) {
-  //           if (
-  //             this.negativeBalls[j].posX >=
-  //             this.negativeBalls[j].posX - this.columnWidth
-  //           ) {
-  //             this.negativeBalls[j].posX -= this.negativeBalls[j].velX;
-  //           }
-  //         }
-  //         this.negativeBalls[i].eventMoved = true;
-  //       }
-  //     }
-  //   }
-  // },
-
   moveBallsLeft() {
     if (this.counter % 950 === 0) {
       for (let i = 0; i < this.negativeBalls.length; i++) {
@@ -595,6 +597,14 @@ const Game = {
         500
       );
       this.background.bgMusic.pause();
+
+      let restartButton = document.querySelector(".restart_container_hidden");
+      restartButton.classList.add("restart_container");
+      restartButton.classList.remove("restart_container_hidden");
+
+      let menuButton = document.querySelector(".menu_container_hidden");
+      menuButton.classList.add("menu_container");
+      menuButton.classList.remove("menu_container_hidden");
     }
   },
 

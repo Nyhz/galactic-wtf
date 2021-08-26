@@ -14,6 +14,43 @@ html {
   font-family: "Orbitron", sans-serif;
 }
 
+.restart_container {
+  color: white;
+  font-size: 10rem;
+  text-align: end;
+  margin-right: 560px;
+}
+
+.restart_container_hidden {
+  color: white;
+  font-size: 10rem;
+  text-align: end;
+  display: none;
+}
+
+.restart_container:hover {
+  color: yellow;
+}
+
+.menu_container {
+  color: white;
+  font-size: 10rem;
+  text-align: start;
+  margin-top: -300px;
+  margin-left: 560px;
+}
+
+.menu_container_hidden {
+  color: white;
+  font-size: 10rem;
+  text-align: start;
+  display: none;
+}
+
+.menu_container:hover {
+  color: yellow;
+}
+
 #canvas {
   padding: 0;
   margin: auto;
@@ -30,14 +67,27 @@ html {
   display: none;
 }
 
-.menu_container {
+#meteor {
+  font-size: 30rem;
+}
+
+#puntos {
+  color: aqua;
+}
+
+#primarycontrols img {
+  margin-right: 200px;
+  margin-bottom: -200px;
+}
+
+.menu__container {
   color: lightgray;
   border-radius: 15%;
   background-image: url(https://lh3.googleusercontent.com/proxy/j-StljxCI2JK30lTFCIGxBxT2Ti5Q1Q8Guo-ie95vJjmkp0KNHTlqxYlsVW0utqs3QtaAXJZ-5Coixsr);
   background-repeat: no-repeat;
   background-size: cover;
   width: 50%;
-  height: 80%;
+  height: 100%;
   padding: 0;
   margin: auto;
   display: block;
@@ -49,14 +99,13 @@ html {
   text-align: center;
 }
 
-.menu_container_hidden {
+.menu__container_hidden {
   display: none;
 }
 
 .text_container {
   text-align: center;
   font-size: 75px;
-  margin-top: 5%;
   padding: 5%;
 }
 
@@ -138,8 +187,14 @@ html {
 #start {
   font-family: "Galactic", sans-serif;
   font-size: 30rem;
+  transition: all 500ms;
 }
 
 #start:hover {
   color: yellow;
+  font-size: 35rem;
+}
+
+#danger {
+  color: red;
 }

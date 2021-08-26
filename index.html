@@ -5,6 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -20,16 +27,34 @@
     <title>Project One</title>
   </head>
   <body>
-    <audio src="/sounds/startSong.mp3" autoplay="autoplay" loop="loop"></audio>
-    <div class="menu_container">
+    <div class="restart_container_hidden" id="restart_id">
+      <span><h2 id="restart">RESTART <i class="fas fa-undo"></i></h2></span>
+    </div>
+    <div class="menu_container_hidden" id="menu_id">
+      <span><h2 id="menu"><i class="fas fa-bars"></i> MENU</h2></span>
+    </div>
+    <div class="menu__container">
       <div class="text_container">
+        <span id="primarycontrols"><img src="/img/controles.png" alt="controls image"></span><span id="meteor"><i class="fas fa-meteor"></i></span>
         <h1>Galactic WTF</h1>
         <h2>Instrucciones</h2>
         <ul class="instrucciones">
-          <li>Llega a 10.000 puntos para ganar</li>
-          <li>Coge monedas para ralentizar los asteroides en pantalla</li>
-          <li>Recoge 1ups para recuperar vida</li>
-          <li>Cuidado con los niveles de cambio de direccion JAJAXD</li>
+          <li>
+            <i class="fab fa-empire"></i> Consigue
+            <span id="puntos">10.000 puntos</span> para ganar.
+          </li>
+          <li>
+            <i class="fab fa-empire"></i> Recoge <span><img src="/img/coin.png" alt="coin image" width="90px" height="90px"> para ralentizar a los
+            asteroides.
+          </li>
+          <li>
+            <i class="fab fa-empire"></i> Captura <span><img src="/img/1up.png" alt="1up image" width="150px" height="125px"></span> para recuperarte.
+          </li>
+          <li>
+            <i class="fab fa-empire"></i>
+            <span id="danger">¡Ten cuidado con los niveles inversos! </span>Son
+            una locura.
+          </li>
         </ul>
         <p id="start">START</p>
       </div>
