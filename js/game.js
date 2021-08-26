@@ -14,7 +14,7 @@ const Game = {
   speedMultiplier: 0,
   frequency: 5,
   negBaseBallSpeed: 10,
-  posBaseBallSpeed: 15,
+  posBaseBallSpeed: 18,
   ranBaseBallSpeed: 15,
 
   background: undefined,
@@ -25,6 +25,10 @@ const Game = {
 
   explosionImg: undefined,
   gameOverImg: undefined,
+  hpImg: undefined,
+
+  coinAudio: undefined,
+  gameOverAudio: undefined,
 
   positiveBalls: [],
   negativeBalls: [],
@@ -32,8 +36,10 @@ const Game = {
 
   keys: {
     moveLeft: "a",
+    moveLeftMayus: "A",
     moveLeftOpt: "ArrowLeft",
     moveRight: "d",
+    moveRightMayus: "D",
     moveRightOpt: "ArrowRight",
     shoot: "w",
     shootOpt: " ",
@@ -77,7 +83,6 @@ const Game = {
       this.drawAll();
 
       this.checkWin();
-      this.isGameover();
 
       this.generatePositiveBalls();
       this.generateNegativeBalls();
@@ -89,6 +94,7 @@ const Game = {
 
       this.defineLevels();
       this.printCurrentLevel();
+      this.isGameover();
 
       this.callEvents();
 
@@ -148,9 +154,7 @@ const Game = {
 
     this.counter = 0;
 
-    this.loadCoin();
-    this.loadExplosion();
-    this.loadGameOver();
+    this.loadAssets();
   },
 
   drawAll() {
@@ -278,8 +282,8 @@ const Game = {
   drawScore() {
     this.score = this.timeScore + this.ballScore;
 
-    this.ctx.font = "128px serif";
-    this.ctx.fillStyle = "green";
+    this.ctx.font = "110px 'Press Start 2P'";
+    this.ctx.fillStyle = "white";
     this.ctx.fillText(`Score: ${this.score}`, 300, 180);
   },
 
@@ -324,7 +328,7 @@ const Game = {
       this.currentLevel = 3;
       this.frequency = 5;
       this.player.setListenersReverse();
-      this.ctx.font = "128px serif";
+      this.ctx.font = "128px 'Press Start 2P'";
       this.ctx.fillStyle = "white";
       this.ctx.fillText(`REVERSE`, this.width / 2 - 425, this.height / 2);
     } else if (this.score > 3000 && this.score < 4000) {
@@ -340,14 +344,14 @@ const Game = {
       this.speedMultiplier = 9;
       this.currentLevel = 6;
       this.player.setListenersReverse();
-      this.ctx.font = "128px serif";
+      this.ctx.font = "128px 'Press Start 2P'";
       this.ctx.fillStyle = "white";
       this.ctx.fillText(`REVERSE`, this.width / 2 - 425, this.height / 2);
     } else if (this.score > 6000 && this.score < 7000) {
       this.speedMultiplier = 12;
       this.currentLevel = 7;
       this.addHealth();
-      this.frequency = 15;
+      this.frequency = 18;
       this.player.setListeners();
     } else if (this.score > 7000 && this.score < 8000) {
       this.speedMultiplier = 15;
@@ -355,7 +359,7 @@ const Game = {
     } else if (this.score > 8000 && this.score < 9000) {
       this.speedMultiplier = 22;
       this.currentLevel = 9;
-      this.frequency = 20;
+      this.frequency = 30;
     } else if (this.score > 9000 && this.score < 10000) {
       this.speedMultiplier = 28;
       this.currentLevel = 10;
@@ -364,13 +368,9 @@ const Game = {
 
   // COLOCAR EL SCORE DE MEJOR MANERA
   printLevel(currentLvl) {
-    this.ctx.font = "128px serif";
+    this.ctx.font = "110px 'Press Start 2'P";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(
-      `Current Level: ${currentLvl}`,
-      this.width / 2 - 425,
-      180
-    );
+    this.ctx.fillText(`Level: ${currentLvl}`, this.width / 2 - 525, 180);
   },
 
   // INTENTAR HACER UN SWITCH CASE??????
@@ -378,17 +378,12 @@ const Game = {
     this.printLevel(this.currentLevel);
   },
 
-  loadCoin() {
-    this.coinImage = new Image();
-    this.coinImage.src = "/img/coin.png";
-  },
-
   printCoins() {
     this.ctx.drawImage(this.coinImage, 300, 300);
 
-    this.ctx.font = "128px serif";
+    this.ctx.font = "128px 'Press Start 2P'";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(`${this.player.takenCoins}`, 520, 460);
+    this.ctx.fillText(`${this.player.takenCoins}`, 550, 500);
   },
 
   isColission() {
@@ -407,6 +402,7 @@ const Game = {
       this.player.posY < this.positiveBall.posY + this.positiveBall.height &&
       !this.positiveBall.collided
     ) {
+      this.coinAudio.play();
       this.positiveBall.collided = true;
       this.player.takenCoins += 1;
       this.ballScore += this.positiveBall.points;
@@ -542,31 +538,44 @@ const Game = {
     this.ctx.fillStyle = "black";
     this.ctx.fillRect(3200, 100, 1150, 100);
     if (this.player.health === 3) {
-      this.ctx.fillStyle = "red";
+      this.ctx.fillStyle = "green";
       this.ctx.fillRect(3212, 110, 1120, 80);
     } else if (this.player.health === 2) {
-      this.ctx.fillStyle = "red";
+      this.ctx.fillStyle = "orange";
       this.ctx.fillRect(3212, 110, 747, 80);
     } else if (this.player.health === 1) {
       this.ctx.fillStyle = "red";
       this.ctx.fillRect(3212, 110, 373, 80);
     }
+    this.ctx.drawImage(this.hpImg, 3100, 30, 250, 250);
   },
 
-  loadGameOver() {
-    this.gameOverImg = new Image();
-    this.gameOverImg.src = "/img/gameover.png";
-  },
+  loadAssets() {
+    this.coinImage = new Image();
+    this.coinImage.src = "/img/coin.png";
 
-  loadExplosion() {
+    this.hpImg = new Image();
+    this.hpImg.src = "/img/spaceship.png";
+
     this.explosionImg = new Image();
     this.explosionImg.src = "/img/explosionGafas.png";
+
+    this.gameOverImg = new Image();
+    this.gameOverImg.src = "/img/gameover.png";
+
+    this.coinAudio = new Audio();
+    this.coinAudio.src = "/sounds/takecoin.mp3";
+
+    this.gameOverAudio = new Audio();
+    this.gameOverAudio.src = "/sounds/gameoversound.mp3";
   },
+
   isGameover() {
-    if (this.player.health === 0) {
+    if (this.player.health <= 0) {
+      clearInterval(this.interval);
+      this.gameOverAudio.play();
       this.ctx.fillStyle = "red";
       this.ctx.fillRect(4365, 110, 5, 80);
-      clearInterval(this.interval);
 
       this.ctx.drawImage(
         this.explosionImg,
@@ -583,16 +592,6 @@ const Game = {
         2000,
         500
       );
-      // this.ctx.font = "128px serif";
-      // this.ctx.fillStyle = "red";
-      // this.ctx.fillText(`GAME OVER`, this.width / 2 - 400, 1300);
-      // this.ctx.font = "128px serif";
-      // this.ctx.fillStyle = "white";
-      // this.ctx.fillText(
-      //   `Points: ${this.score + 1}`,
-      //   this.width / 2 - 340,
-      //   1500
-      // );
       this.background.bgMusic.pause();
     }
   },

@@ -55,10 +55,12 @@ class Player {
       switch (e.key) {
         case this.keys.moveLeft:
         case this.keys.moveLeftOpt:
+        case this.keys.moveLeftMayus:
           this.moveLeft();
           break;
         case this.keys.moveRight:
         case this.keys.moveRightOpt:
+        case this.keys.moveRightMayus:
           this.moveRight();
           break;
         case this.keys.shoot:
@@ -90,16 +92,25 @@ class Player {
   }
 
   moveLeft() {
-    if (!(this.moveLimit <= -2)) {
+    if (!(this.moveLimit < -2)) {
       this.moveLimit--;
       this.posX -= this.velX;
+    }
+
+    if (this.moveLimit === -3) {
+      this.posX += this.gameWidth;
+      this.moveLimit = 2;
     }
   }
 
   moveRight() {
-    if (!(this.moveLimit >= 2)) {
+    if (!(this.moveLimit > 2)) {
       this.moveLimit++;
       this.posX += this.velX;
+    }
+    if (this.moveLimit === 3) {
+      this.posX -= this.gameWidth;
+      this.moveLimit = -2;
     }
   }
 
