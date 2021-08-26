@@ -6,7 +6,7 @@
 }
 
 body {
-  background: url("img/bgspaces.jpg");
+  background: url("../img/bgspaces.jpg");
   background-size: cover;
   font-family: "Orbitron", sans-serif;
 }

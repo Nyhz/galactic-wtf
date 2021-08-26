@@ -9,7 +9,7 @@ class Background {
     this.image2.src = "img/bgbg.jpg";
     this.posX = 0;
     this.posY = 0;
-    this.imageVelY = 1.7;
+    this.imageVelY = 2;
 
     this.bgMusic = new Audio();
     this.bgMusic.src = "sounds/ingame.mp3";

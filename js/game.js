@@ -29,6 +29,7 @@ const Game = {
 
   coinAudio: undefined,
   gameOverAudio: undefined,
+  winAudio: undefined,
 
   positiveBalls: [],
   negativeBalls: [],
@@ -572,6 +573,9 @@ const Game = {
 
     this.gameOverAudio = new Audio();
     this.gameOverAudio.src = "sounds/gameoversound.mp3";
+
+    this.winAudio = new Audio();
+    this.winAudio.src = "sounds/win.mp3";
   },
 
   isGameover() {
@@ -612,6 +616,7 @@ const Game = {
     if (this.score >= 10000) {
       this.ctx.fillStyle = "red";
       this.ctx.fillRect(1454.9, 36.6, 1.6, 26.6);
+      this.winAudio.play();
       clearInterval(this.interval);
 
       this.ctx.font = "50px serif";
