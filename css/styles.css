@@ -6,10 +6,7 @@
 }
 
 body {
-  background: url(/img/bgspaces.jpg) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
+  background: url(/img/bgspaces.jpg);
   background-size: cover;
   font-family: "Orbitron", sans-serif;
 }
