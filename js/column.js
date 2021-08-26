@@ -11,7 +11,7 @@ class Column {
     //this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
 
     this.ctx.fillStyle = "blue";
-    this.ctx.lineWidth = 5;
+    this.ctx.lineWidth = 1.6;
     this.ctx.strokeRect(
       this.columnX,
       this.columnY,

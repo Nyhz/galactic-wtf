@@ -4,8 +4,8 @@ class Player {
     this.gameWidth = gameW;
     this.gameHeight = gameH;
 
-    this.width = 200;
-    this.height = 200;
+    this.width = 66.6;
+    this.height = 66.6;
 
     this.health = 3;
     this.healedFive = false;
@@ -21,7 +21,7 @@ class Player {
     this.image.src = "img/spaceship.png";
 
     this.posX = this.gameWidth / 2 - this.width / 2;
-    this.posY = this.gameHeight - 20 - this.height;
+    this.posY = this.gameHeight - 6.6 - this.height;
 
     this.velX = speed; //modificar respecto a las columnas (this.gameWidth/5)
 
@@ -135,7 +135,7 @@ class Player {
       (bullets) => bullets.collidedNegative === false
     );
     this.bullets = this.bullets.filter(
-      (bull) => bull.posY > -50 && bull.posY <= this.gameHeight
+      (bull) => bull.posY > -16.6 && bull.posY <= this.gameHeight
     );
   }
 

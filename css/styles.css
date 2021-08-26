@@ -6,7 +6,7 @@
 }
 
 html {
-  background: url(./img/bgspaces.jpg) no-repeat center center fixed;
+  background: url(/img/bgspaces.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -16,14 +16,14 @@ html {
 
 .restart_container {
   color: white;
-  font-size: 10rem;
+  font-size: 3.3rem;
   text-align: end;
-  margin-right: 560px;
+  margin-right: 186.6px;
 }
 
 .restart_container_hidden {
   color: white;
-  font-size: 10rem;
+  font-size: 3.3rem;
   text-align: end;
   display: none;
 }
@@ -34,15 +34,15 @@ html {
 
 .menu_container {
   color: white;
-  font-size: 10rem;
+  font-size: 3.3rem;
   text-align: start;
-  margin-top: -300px;
-  margin-left: 560px;
+  margin-top: -100px;
+  margin-left: 186.6px;
 }
 
 .menu_container_hidden {
   color: white;
-  font-size: 10rem;
+  font-size: 3.3rem;
   text-align: start;
   display: none;
 }
@@ -67,17 +67,13 @@ html {
   display: none;
 }
 
-#meteor {
-  font-size: 30rem;
-}
-
 #puntos {
   color: aqua;
 }
 
 #primarycontrols img {
-  margin-right: 200px;
-  margin-bottom: -200px;
+  margin-right: 66.6px;
+  width: 30%;
 }
 
 .menu__container {
@@ -86,7 +82,7 @@ html {
   background-image: url(https://lh3.googleusercontent.com/proxy/j-StljxCI2JK30lTFCIGxBxT2Ti5Q1Q8Guo-ie95vJjmkp0KNHTlqxYlsVW0utqs3QtaAXJZ-5Coixsr);
   background-repeat: no-repeat;
   background-size: cover;
-  width: 50%;
+  width: 60%;
   height: 100%;
   padding: 0;
   margin: auto;
@@ -105,19 +101,13 @@ html {
 
 .text_container {
   text-align: center;
-  font-size: 75px;
+  font-size: 25px;
   padding: 5%;
 }
 
 .text_container h1 {
   margin-bottom: 5%;
-  font-size: 15rem;
-}
-
-.text_container h1 {
-  margin-bottom: 5%;
-  font-family: "Galactic", sans-serif;
-  font-size: 40rem;
+  font-size: 5rem;
   -webkit-animation: breathing 1s ease-out infinite normal;
   animation: breathing 2s ease-out infinite normal;
   -webkit-font-smoothing: antialiased;
@@ -173,26 +163,25 @@ html {
 
 .text_container h2 {
   text-align: start;
-  font-size: 10rem;
+  font-size: 3.3rem;
 }
 
 .text_container li {
   text-align: start;
   text-decoration: none;
   list-style: none;
-  font-size: 5rem;
-  line-height: 150px;
+  font-size: 1.3rem;
+  line-height: 50px;
 }
 
 #start {
-  font-family: "Galactic", sans-serif;
-  font-size: 30rem;
+  font-size: 3rem;
   transition: all 500ms;
 }
 
 #start:hover {
   color: yellow;
-  font-size: 35rem;
+  font-size: 5rem;
 }
 
 #danger {

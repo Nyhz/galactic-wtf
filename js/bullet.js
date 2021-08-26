@@ -1,12 +1,12 @@
 class Bullet {
   constructor(ctx, playerX, playerH, gameH) {
     this.ctx = ctx;
-    this.posX = playerX + 80;
-    this.posY = gameH - playerH - 100;
-    this.width = 40;
-    this.height = 150;
-    this.speedY = 75;
-    this.radius = 12;
+    this.posX = playerX + 26.6;
+    this.posY = gameH - playerH - 33.3;
+    this.width = 13.3;
+    this.height = 50;
+    this.speedY = 25;
+    this.radius = 4;
 
     this.collidedPlayer = false;
     this.collidedNegative = false;
@@ -27,7 +27,7 @@ class Bullet {
   }
   move() {
     this.posY -= this.speedY;
-    if (this.posY < 100) {
+    if (this.posY < 33.3) {
       this.speedY *= -1;
     }
   }

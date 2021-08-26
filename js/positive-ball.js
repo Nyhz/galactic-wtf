@@ -3,11 +3,11 @@ class PositiveBall {
     this.ctx = ctx;
     // this.size = 35
     this.posY = 0;
-    this.posX = column - 75;
+    this.posX = column - 25;
     this.velY = velY * 1.5;
     this.points = 200;
-    this.width = 150;
-    this.height = 150;
+    this.width = 49.9;
+    this.height = 49.9;
     this.collided = false;
 
     this.image = new Image();

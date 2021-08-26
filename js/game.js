@@ -13,9 +13,9 @@ const Game = {
   currentLevel: 1,
   speedMultiplier: 0,
   frequency: 5,
-  negBaseBallSpeed: 10,
-  posBaseBallSpeed: 18,
-  ranBaseBallSpeed: 15,
+  negBaseBallSpeed: 4,
+  posBaseBallSpeed: 6,
+  ranBaseBallSpeed: 5,
 
   background: undefined,
   player: undefined,
@@ -306,9 +306,9 @@ const Game = {
   drawScore() {
     this.score = this.timeScore + this.ballScore;
 
-    this.ctx.font = "110px 'Press Start 2P'";
+    this.ctx.font = "36.6px 'Press Start 2P'";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(`Score: ${this.score}`, 300, 180);
+    this.ctx.fillText(`Score: ${this.score}`, 100, 60);
   },
 
   addScore() {
@@ -344,55 +344,55 @@ const Game = {
 
   defineLevels() {
     if (this.score > 1000 && this.score <= 2000) {
-      this.speedMultiplier = 3;
+      this.speedMultiplier = 1;
       this.currentLevel = 2;
     } else if (this.score > 2000 && this.score < 3000) {
-      this.speedMultiplier = 5;
+      this.speedMultiplier = 2;
       this.currentLevel = 3;
       this.frequency = 5;
       this.player.setListenersReverse();
-      this.ctx.font = "128px 'Press Start 2P'";
+      this.ctx.font = "42.6px 'Press Start 2P'";
       this.ctx.fillStyle = "white";
-      this.ctx.fillText(`REVERSE`, this.width / 2 - 425, this.height / 2);
+      this.ctx.fillText(`REVERSE`, this.width / 2 - 141.6, this.height / 2);
     } else if (this.score > 3000 && this.score < 4000) {
-      this.speedMultiplier = 7;
+      this.speedMultiplier = 3;
       this.currentLevel = 4;
       this.addHealth();
       this.player.setListeners();
     } else if (this.score > 4000 && this.score < 5000) {
-      this.speedMultiplier = 9;
+      this.speedMultiplier = 4;
       this.currentLevel = 5;
       this.frequency = 10;
     } else if (this.score > 5000 && this.score < 6000) {
-      this.speedMultiplier = 11;
+      this.speedMultiplier = 5;
       this.currentLevel = 6;
       this.player.setListenersReverse();
-      this.ctx.font = "128px 'Press Start 2P'";
+      this.ctx.font = "42.6px 'Press Start 2P'";
       this.ctx.fillStyle = "white";
-      this.ctx.fillText(`REVERSE`, this.width / 2 - 425, this.height / 2);
+      this.ctx.fillText(`REVERSE`, this.width / 2 - 141.6, this.height / 2);
     } else if (this.score > 6000 && this.score < 7000) {
-      this.speedMultiplier = 13;
+      this.speedMultiplier = 6;
       this.currentLevel = 7;
       this.addHealth();
       this.frequency = 15;
       this.player.setListeners();
     } else if (this.score > 7000 && this.score < 8000) {
-      this.speedMultiplier = 15;
+      this.speedMultiplier = 7;
       this.currentLevel = 8;
     } else if (this.score > 8000 && this.score < 9000) {
-      this.speedMultiplier = 20;
+      this.speedMultiplier = 8;
       this.currentLevel = 9;
       this.frequency = 20;
     } else if (this.score > 9000 && this.score < 10000) {
-      this.speedMultiplier = 25;
+      this.speedMultiplier = 10;
       this.currentLevel = 10;
     }
   },
 
   printLevel(currentLvl) {
-    this.ctx.font = "110px 'Press Start 2'P";
+    this.ctx.font = "36.6px 'Press Start 2'P";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(`Level: ${currentLvl}`, this.width / 2 - 525, 180);
+    this.ctx.fillText(`Level: ${currentLvl}`, this.width / 2 - 175, 60);
   },
 
   printCurrentLevel() {
@@ -400,11 +400,11 @@ const Game = {
   },
 
   printCoins() {
-    this.ctx.drawImage(this.coinImage, 300, 300);
+    this.ctx.drawImage(this.coinImage, 120, 130, 50, 50);
 
-    this.ctx.font = "128px 'Press Start 2P'";
+    this.ctx.font = "42.6px 'Press Start 2P'";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(`${this.player.takenCoins}`, 550, 500);
+    this.ctx.fillText(`${this.player.takenCoins}`, 183, 183);
   },
 
   isColission() {
@@ -540,18 +540,18 @@ const Game = {
 
   printLives() {
     this.ctx.fillStyle = "black";
-    this.ctx.fillRect(3200, 100, 1150, 100);
+    this.ctx.fillRect(1066.6, 33.3, 383.3, 33.3);
     if (this.player.health === 3) {
       this.ctx.fillStyle = "green";
-      this.ctx.fillRect(3212, 110, 1120, 80);
+      this.ctx.fillRect(1070.5, 36.6, 373.3, 26.6);
     } else if (this.player.health === 2) {
       this.ctx.fillStyle = "orange";
-      this.ctx.fillRect(3212, 110, 747, 80);
+      this.ctx.fillRect(1070.5, 36.6, 248.9, 26.6);
     } else if (this.player.health === 1) {
       this.ctx.fillStyle = "red";
-      this.ctx.fillRect(3212, 110, 373, 80);
+      this.ctx.fillRect(1070.5, 36.6, 124.3, 26.6);
     }
-    this.ctx.drawImage(this.hpImg, 3100, 30, 250, 250);
+    this.ctx.drawImage(this.hpImg, 1033.2, 10, 83.33, 83.33);
   },
 
   loadAssets() {
@@ -579,22 +579,22 @@ const Game = {
       clearInterval(this.interval);
       this.gameOverAudio.play();
       this.ctx.fillStyle = "red";
-      this.ctx.fillRect(4365, 110, 5, 80);
+      this.ctx.fillRect(1454.9, 36.6, 1.6, 26.6);
 
       this.ctx.drawImage(
         this.explosionImg,
-        this.width / 2 - 1000,
-        this.height / 2 - 1000,
-        2000,
-        2000
+        this.width / 2 - 333.3,
+        this.height / 2 - 333.3,
+        666.6,
+        666.6
       );
 
       this.ctx.drawImage(
         this.gameOverImg,
-        this.width / 2 - 1000,
-        this.height / 2 + 350,
-        2000,
-        500
+        this.width / 2 - 333.3,
+        this.height / 2 + 116.6,
+        666.6,
+        166.6
       );
       this.background.bgMusic.pause();
 
@@ -611,12 +611,12 @@ const Game = {
   checkWin() {
     if (this.score >= 10000) {
       this.ctx.fillStyle = "red";
-      this.ctx.fillRect(4365, 110, 5, 80);
+      this.ctx.fillRect(1454.9, 36.6, 1.6, 26.6);
       clearInterval(this.interval);
 
-      this.ctx.font = "150px serif";
+      this.ctx.font = "50px serif";
       this.ctx.fillStyle = "teal";
-      this.ctx.fillText(`YOU WIN`, this.width / 2 - 400, 1300);
+      this.ctx.fillText(`YOU WIN`, this.width / 2 - 133.3, 432.9);
     }
   },
 };
