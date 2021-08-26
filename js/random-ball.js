@@ -12,6 +12,9 @@ class RandomBall {
 
     this.healthImg = new Image();
     this.healthImg.src = "/img/1up.png";
+
+    this.healAudio = new Audio();
+    this.healAudio.src = "/sounds/healsound.mp3";
   }
 
   draw() {

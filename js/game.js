@@ -425,8 +425,10 @@ const Game = {
       this.player.posY < this.randomBall.posY + this.randomBall.height
     ) {
       this.randomBall.collided = true;
+
       if (this.player.health < 3) {
         this.player.health += 1;
+        this.randomBall.healAudio.play();
       }
     }
   },

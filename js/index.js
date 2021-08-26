@@ -1,7 +1,6 @@
 window.onload = () => {
   document.getElementById("start").onclick = () => {
     let canvasEl = document.getElementById("canvasHidden");
-    console.log(canvasEl);
     let menuEl = document.querySelector(".menu_container");
     menuEl.classList.add("menu_container_hidden");
     menuEl.classList.remove("menu_container");
