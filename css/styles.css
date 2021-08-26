@@ -10,6 +10,7 @@ body {
   background-size: cover;
   font-family: "Orbitron", sans-serif;
 }
+
 .restart_container {
   color: white;
   font-size: 3.3rem;
@@ -67,17 +68,10 @@ body {
   color: aqua;
 }
 
-#primarycontrols img {
-  margin-right: 66.6px;
-  width: 30%;
-}
-
 .menu__container {
-  color: lightgray;
-  border-radius: 15%;
+  color: white;
   width: 60%;
   height: 100%;
-  padding: 0;
   margin: auto;
   display: block;
   position: absolute;
@@ -85,7 +79,6 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  text-align: center;
 }
 
 .menu__container_hidden {
@@ -100,12 +93,36 @@ body {
 
 .text_container h1 {
   margin-bottom: 5%;
-  font-size: 5rem;
+  font-size: 7rem;
   -webkit-animation: breathing 1s ease-out infinite normal;
   animation: breathing 2s ease-out infinite normal;
   -webkit-font-smoothing: antialiased;
 }
 
+.mid_container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.columna1 {
+  grid-column: 1/2;
+}
+
+.columna2 {
+  grid-column: 2/3;
+}
+
+.columna2 img {
+  width: 65%;
+}
+
+.start_button {
+  text-align: center;
+}
+
+#meteor {
+  font-size: 10rem;
+}
 @-webkit-keyframes breathing {
   0% {
     -webkit-transform: scale(0.9);

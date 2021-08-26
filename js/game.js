@@ -31,6 +31,7 @@ const Game = {
   coinAudio: undefined,
   gameOverAudio: undefined,
   winAudio: undefined,
+  slowAudio: undefined,
 
   positiveBalls: [],
   negativeBalls: [],
@@ -366,27 +367,27 @@ const Game = {
       this.currentLevel = 5;
       this.frequency = 10;
     } else if (this.score > 5000 && this.score < 6000) {
-      this.speedMultiplier = 5;
+      this.speedMultiplier = 4;
       this.currentLevel = 6;
       this.player.setListenersReverse();
       this.ctx.font = "42.6px 'Press Start 2P'";
       this.ctx.fillStyle = "white";
       this.ctx.fillText(`REVERSE`, this.width / 2 - 141.6, this.height / 2);
     } else if (this.score > 6000 && this.score < 7000) {
-      this.speedMultiplier = 6;
+      this.speedMultiplier = 5;
       this.currentLevel = 7;
       this.addHealth();
       this.frequency = 15;
       this.player.setListeners();
     } else if (this.score > 7000 && this.score < 8000) {
-      this.speedMultiplier = 7;
+      this.speedMultiplier = 5;
       this.currentLevel = 8;
     } else if (this.score > 8000 && this.score < 9000) {
-      this.speedMultiplier = 8;
+      this.speedMultiplier = 5;
       this.currentLevel = 9;
       this.frequency = 20;
     } else if (this.score > 9000 && this.score < 10000) {
-      this.speedMultiplier = 10;
+      this.speedMultiplier = 7;
       this.currentLevel = 10;
     }
   },
@@ -518,10 +519,10 @@ const Game = {
 
   slowBalls() {
     if (this.player.takenCoins === 10) {
-      console.log("lol");
+      this.slowAudio.play();
       let counterTwo = this.counter;
       this.negativeBalls.forEach((negative) => {
-        negative.velY = 5;
+        negative.velY = 1;
       });
       this.player.takenCoins = 0;
     }
@@ -574,6 +575,9 @@ const Game = {
 
     this.coinAudio = new Audio();
     this.coinAudio.src = "sounds/takecoin.mp3";
+
+    this.slowAudio = new Audio();
+    this.slowAudio.src = "sounds/slow.mp3";
 
     this.gameOverAudio = new Audio();
     this.gameOverAudio.src = "sounds/gameoversound.mp3";
