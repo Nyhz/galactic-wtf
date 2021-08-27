@@ -85,8 +85,6 @@ const Game = {
       this.clear();
       this.drawAll();
 
-      this.checkWin();
-
       this.generatePositiveBalls();
       this.generateNegativeBalls();
       this.generateRandomBalls();
@@ -98,6 +96,7 @@ const Game = {
       this.defineLevels();
       this.printCurrentLevel();
       this.isGameover();
+      this.checkWin();
 
       this.callEvents();
 
@@ -621,7 +620,7 @@ const Game = {
   },
 
   checkWin() {
-    if (this.score >= 10000) {
+    if (this.score >= 5000) {
       this.ctx.fillStyle = "red";
       this.ctx.fillRect(1454.9, 36.6, 1.6, 26.6);
       this.winAudio.play();
