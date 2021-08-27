@@ -367,19 +367,20 @@ const Game = {
       this.frequency = 10;
     } else if (this.score > 5000 && this.score < 6000) {
       this.speedMultiplier = 4;
+      this.frequency = 12;
       this.currentLevel = 6;
+    } else if (this.score > 6000 && this.score < 7000) {
+      this.speedMultiplier = 5;
+      this.currentLevel = 7;
       this.player.setListenersReverse();
       this.ctx.font = "42.6px 'Press Start 2P'";
       this.ctx.fillStyle = "white";
       this.ctx.fillText(`REVERSE`, this.width / 2 - 141.6, this.height / 2);
-    } else if (this.score > 6000 && this.score < 7000) {
-      this.speedMultiplier = 5;
-      this.currentLevel = 7;
-      this.addHealth();
       this.frequency = 15;
-      this.player.setListeners();
     } else if (this.score > 7000 && this.score < 8000) {
       this.speedMultiplier = 5;
+      this.player.setListeners();
+      this.addHealth();
       this.currentLevel = 8;
     } else if (this.score > 8000 && this.score < 9000) {
       this.speedMultiplier = 5;
@@ -620,7 +621,7 @@ const Game = {
   },
 
   checkWin() {
-    if (this.score >= 5000) {
+    if (this.score >= 6000) {
       this.ctx.fillStyle = "red";
       this.ctx.fillRect(1454.9, 36.6, 1.6, 26.6);
       this.winAudio.play();
